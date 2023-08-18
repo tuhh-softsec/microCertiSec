@@ -1,0 +1,93 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | recommendation_client -> movie_service     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | recommendation_client ->                   | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           | recommendation_service                     | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_service -> eureka_service           | ['restful_http']                         |                                |
+|                                   | included  | user_service -> eureka_service             | ['restful_http']                         |                                |
+|                                   | included  | recommendation_client -> user_service      | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_service -> movie_service            | ['restful_http']                         |                                |
+|                                   | included  | movie_service -> eureka_service            | ['restful_http']                         |                                |
+|                                   | included  | config_service -> user_service             | ['restful_http']                         |                                |
+|                                   | included  | recommendation_service -> eureka_service   | ['restful_http']                         |                                |
+|                                   | included  | eureka_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | included  | config_service -> recommendation_service   | ['restful_http']                         |                                |
+|                                   | included  | config_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | recommendation_client -> movie_service     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | recommendation_client ->                   | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           | recommendation_service                     | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_service -> eureka_service           | ['restful_http']                         |                                |
+|                                   | included  | user_service -> eureka_service             | ['restful_http']                         |                                |
+|                                   | included  | recommendation_client -> user_service      | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_service -> movie_service            | ['restful_http']                         |                                |
+|                                   | included  | movie_service -> eureka_service            | ['restful_http']                         |                                |
+|                                   | included  | config_service -> user_service             | ['restful_http']                         |                                |
+|                                   | included  | recommendation_service -> eureka_service   | ['restful_http']                         |                                |
+|                                   | included  | eureka_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | included  | config_service -> recommendation_service   | ['restful_http']                         |                                |
+|                                   | included  | config_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | github_repository -> config_service        | ['restful_http']                         |                                |
+|                                   | excluded  | database_movie_service -> movie_service    | ['jdbc']                                 |                                |
+|                                   | excluded  | database_recommendation_service ->         | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   | excluded  | user -> recommendation_client              | ['restful_http']                         |                                |
+|                                   | excluded  | database_user_service -> user_service      | ['jdbc', 'plaintext_credentials_link']   |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | recommendation_client -> movie_service     |                                          |                                |
+|                                   |           | recommendation_client ->                   |                                          |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   |           | config_service -> eureka_service           |                                          |                                |
+|                                   |           | user_service -> eureka_service             |                                          |                                |
+|                                   |           | recommendation_client -> user_service      |                                          |                                |
+|                                   |           | config_service -> movie_service            |                                          |                                |
+|                                   |           | movie_service -> eureka_service            |                                          |                                |
+|                                   |           | config_service -> user_service             |                                          |                                |
+|                                   |           | recommendation_service -> eureka_service   |                                          |                                |
+|                                   |           | eureka_service -> recommendation_client    |                                          |                                |
+|                                   |           | config_service -> recommendation_service   |                                          |                                |
+|                                   |           | config_service -> recommendation_client    |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | config_service -> eureka_service           | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> movie_service            | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> recommendation_service   | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> user_service             | ['restful_http']                         |                                |
+|                                   | fails     | eureka_service -> recommendation_client    | ['restful_http']                         |                                |
+|                                   | fails     | movie_service -> eureka_service            | ['restful_http']                         |                                |
+|                                   | fails     | recommendation_client -> movie_service     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | fails     | recommendation_client ->                   | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           | recommendation_service                     | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | fails     | recommendation_client -> user_service      | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | fails     | recommendation_service -> eureka_service   | ['restful_http']                         |                                |
+|                                   | fails     | user_service -> eureka_service             | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

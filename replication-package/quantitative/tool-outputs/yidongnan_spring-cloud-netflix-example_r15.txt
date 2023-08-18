@@ -1,0 +1,72 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_have("local_logging")                                                                                            |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | included  | admin_dashboard     | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | service_b           | ['internal', 'csrf_disabled', 'service'] |                                |
+|                                     | included  | hystrix_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'monitoring_server', 'infrastructural',  |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | included  | service_a           | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | included  | zipkin              | ['tracing_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | zuul                | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'csrf_disabled', 'entrypoint',           |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | config_server       |                                          |                                |
+|                                     |           | eureka_server       |                                          |                                |
+|                                     |           | admin_dashboard     |                                          |                                |
+|                                     |           | service_b           |                                          |                                |
+|                                     |           | hystrix_dashboard   |                                          |                                |
+|                                     |           | service_a           |                                          |                                |
+|                                     |           | zipkin              |                                          |                                |
+|                                     |           | zuul                |                                          |                                |
+|                                     |           | rabbitmq            |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("local_logging")        | fails     | admin_dashboard     | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | fails     | hystrix_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'monitoring_server', 'infrastructural',  |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | fails     | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | service_a           | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | fails     | service_b           | ['internal', 'csrf_disabled', 'service'] |                                |
+|                                     | fails     | zipkin              | ['tracing_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | zuul                | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'csrf_disabled', 'entrypoint',           |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

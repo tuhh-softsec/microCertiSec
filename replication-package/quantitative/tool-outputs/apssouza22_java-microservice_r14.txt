@@ -1,0 +1,164 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | kafka -> mailer                            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | reminder -> eureka_server                  | ['restful_http']                         |                                |
+|                                   | included  | admin -> reminder                          | ['restful_http']                         |                                |
+|                                   | included  | config_server -> reminder                  | ['restful_http']                         |                                |
+|                                   | included  | config_server -> mailer                    | ['restful_http']                         |                                |
+|                                   | included  | reminder -> kafka                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | included  | eureka_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | admin -> api_gateway                       | ['restful_http']                         |                                |
+|                                   | included  | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | included  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | api_gateway -> user_service                | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_server -> oauth                     | ['restful_http']                         |                                |
+|                                   | included  | oauth -> user_service                      | ['restful_http', 'auth_provider',        |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | admin -> config_server                     | ['restful_http']                         |                                |
+|                                   | included  | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | included  | oauth -> eureka_server                     | ['restful_http']                         |                                |
+|                                   | included  | admin -> oauth                             | ['restful_http']                         |                                |
+|                                   | included  | proxy -> api_gateway                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | admin -> mailer                            | ['restful_http']                         |                                |
+|                                   | included  | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | included  | mailer -> eureka_server                    | ['restful_http']                         |                                |
+|                                   | included  | admin -> user_service                      | ['restful_http']                         |                                |
+|                                   | included  | eureka_server -> admin                     | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | api_gateway -> logstash                    | ['restful_http']                         |                                |
+|                                   | excluded  | oauth -> logstash                          | ['restful_http']                         |                                |
+|                                   | excluded  | admin -> logstash                          | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> logstash                  | ['restful_http']                         |                                |
+|                                   | excluded  | mailer -> logstash                         | ['restful_http']                         |                                |
+|                                   | excluded  | proxy -> logstash                          | ['restful_http']                         |                                |
+|                                   | excluded  | user_service -> logstash                   | ['restful_http']                         |                                |
+|                                   | excluded  | reminder -> logstash                       | ['restful_http']                         |                                |
+|                                   | excluded  | eureka_server -> logstash                  | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | api_gateway -> logstash                    | ['restful_http']                         |                                |
+|                                   | included  | kafka -> mailer                            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | oauth -> logstash                          | ['restful_http']                         |                                |
+|                                   | included  | reminder -> eureka_server                  | ['restful_http']                         |                                |
+|                                   | included  | admin -> logstash                          | ['restful_http']                         |                                |
+|                                   | included  | admin -> reminder                          | ['restful_http']                         |                                |
+|                                   | included  | config_server -> logstash                  | ['restful_http']                         |                                |
+|                                   | included  | config_server -> reminder                  | ['restful_http']                         |                                |
+|                                   | included  | config_server -> mailer                    | ['restful_http']                         |                                |
+|                                   | included  | mailer -> logstash                         | ['restful_http']                         |                                |
+|                                   | included  | reminder -> kafka                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | included  | eureka_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | admin -> api_gateway                       | ['restful_http']                         |                                |
+|                                   | included  | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | included  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | api_gateway -> user_service                | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | config_server -> oauth                     | ['restful_http']                         |                                |
+|                                   | included  | oauth -> user_service                      | ['restful_http', 'auth_provider',        |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | included  | admin -> config_server                     | ['restful_http']                         |                                |
+|                                   | included  | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | included  | oauth -> eureka_server                     | ['restful_http']                         |                                |
+|                                   | included  | admin -> oauth                             | ['restful_http']                         |                                |
+|                                   | included  | proxy -> api_gateway                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | admin -> mailer                            | ['restful_http']                         |                                |
+|                                   | included  | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | included  | mailer -> eureka_server                    | ['restful_http']                         |                                |
+|                                   | included  | proxy -> logstash                          | ['restful_http']                         |                                |
+|                                   | included  | admin -> user_service                      | ['restful_http']                         |                                |
+|                                   | included  | user_service -> logstash                   | ['restful_http']                         |                                |
+|                                   | included  | reminder -> logstash                       | ['restful_http']                         |                                |
+|                                   | included  | eureka_server -> admin                     | ['restful_http']                         |                                |
+|                                   | included  | eureka_server -> logstash                  | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> proxy                              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | user -> oauth                              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | api_gateway -> logstash                    |                                          |                                |
+|                                   |           | kafka -> mailer                            |                                          |                                |
+|                                   |           | oauth -> logstash                          |                                          |                                |
+|                                   |           | reminder -> eureka_server                  |                                          |                                |
+|                                   |           | admin -> logstash                          |                                          |                                |
+|                                   |           | admin -> reminder                          |                                          |                                |
+|                                   |           | config_server -> logstash                  |                                          |                                |
+|                                   |           | config_server -> reminder                  |                                          |                                |
+|                                   |           | config_server -> mailer                    |                                          |                                |
+|                                   |           | mailer -> logstash                         |                                          |                                |
+|                                   |           | reminder -> kafka                          |                                          |                                |
+|                                   |           | eureka_server -> api_gateway               |                                          |                                |
+|                                   |           | admin -> api_gateway                       |                                          |                                |
+|                                   |           | config_server -> user_service              |                                          |                                |
+|                                   |           | config_server -> api_gateway               |                                          |                                |
+|                                   |           | api_gateway -> user_service                |                                          |                                |
+|                                   |           | config_server -> oauth                     |                                          |                                |
+|                                   |           | oauth -> user_service                      |                                          |                                |
+|                                   |           | admin -> config_server                     |                                          |                                |
+|                                   |           | config_server -> eureka_server             |                                          |                                |
+|                                   |           | oauth -> eureka_server                     |                                          |                                |
+|                                   |           | admin -> oauth                             |                                          |                                |
+|                                   |           | proxy -> api_gateway                       |                                          |                                |
+|                                   |           | admin -> mailer                            |                                          |                                |
+|                                   |           | zookeeper -> kafka                         |                                          |                                |
+|                                   |           | mailer -> eureka_server                    |                                          |                                |
+|                                   |           | proxy -> logstash                          |                                          |                                |
+|                                   |           | admin -> user_service                      |                                          |                                |
+|                                   |           | user_service -> logstash                   |                                          |                                |
+|                                   |           | reminder -> logstash                       |                                          |                                |
+|                                   |           | eureka_server -> admin                     |                                          |                                |
+|                                   |           | eureka_server -> logstash                  |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | admin -> api_gateway                       | ['restful_http']                         |                                |
+|                                   | fails     | admin -> config_server                     | ['restful_http']                         |                                |
+|                                   | fails     | admin -> mailer                            | ['restful_http']                         |                                |
+|                                   | fails     | admin -> oauth                             | ['restful_http']                         |                                |
+|                                   | fails     | admin -> reminder                          | ['restful_http']                         |                                |
+|                                   | fails     | admin -> user_service                      | ['restful_http']                         |                                |
+|                                   | fails     | api_gateway -> user_service                | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | fails     | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> mailer                    | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> oauth                     | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> reminder                  | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | fails     | eureka_server -> admin                     | ['restful_http']                         |                                |
+|                                   | fails     | eureka_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | fails     | kafka -> mailer                            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | fails     | mailer -> eureka_server                    | ['restful_http']                         |                                |
+|                                   | fails     | oauth -> eureka_server                     | ['restful_http']                         |                                |
+|                                   | fails     | oauth -> user_service                      | ['restful_http', 'auth_provider',        |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'feign_connection']                      |                                |
+|                                   | fails     | proxy -> api_gateway                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | reminder -> eureka_server                  | ['restful_http']                         |                                |
+|                                   | fails     | reminder -> kafka                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | fails     | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

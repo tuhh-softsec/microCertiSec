@@ -1,0 +1,88 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | department_service -> zipkin_server        | ['restful_http']                         |                                |
+|                                   | included  | department_service -> service_registry     | ['restful_http']                         |                                |
+|                                   | included  | user_service -> service_registry           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | api_gateway -> user_service                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | api_gateway -> department_service          | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | config_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | included  | zipkin_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | included  | hystrix_dashboard -> service_registry      | ['restful_http']                         |                                |
+|                                   | included  | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | included  | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | config_server -> service_registry          | ['restful_http']                         |                                |
+|                                   | included  | user_service -> zipkin_server              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | service_registry -> api_gateway            | ['restful_http']                         |                                |
+|                                   | included  | config_server -> department_service        | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | department_service -> zipkin_server        | ['restful_http']                         |                                |
+|                                   | included  | department_service -> service_registry     | ['restful_http']                         |                                |
+|                                   | included  | user_service -> service_registry           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | api_gateway -> user_service                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | included  | api_gateway -> department_service          | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | config_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | included  | zipkin_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | included  | hystrix_dashboard -> service_registry      | ['restful_http']                         |                                |
+|                                   | included  | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | included  | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | config_server -> service_registry          | ['restful_http']                         |                                |
+|                                   | included  | user_service -> zipkin_server              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | service_registry -> api_gateway            | ['restful_http']                         |                                |
+|                                   | included  | config_server -> department_service        | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | github_repository -> config_server         | ['restful_http']                         |                                |
+|                                   | excluded  | user -> api_gateway                        | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | department_service -> zipkin_server        |                                          |                                |
+|                                   |           | department_service -> service_registry     |                                          |                                |
+|                                   |           | user_service -> service_registry           |                                          |                                |
+|                                   |           | api_gateway -> user_service                |                                          |                                |
+|                                   |           | config_server -> api_gateway               |                                          |                                |
+|                                   |           | api_gateway -> department_service          |                                          |                                |
+|                                   |           | config_server -> hystrix_dashboard         |                                          |                                |
+|                                   |           | zipkin_server -> hystrix_dashboard         |                                          |                                |
+|                                   |           | hystrix_dashboard -> service_registry      |                                          |                                |
+|                                   |           | config_server -> user_service              |                                          |                                |
+|                                   |           | user_service -> department_service         |                                          |                                |
+|                                   |           | config_server -> service_registry          |                                          |                                |
+|                                   |           | user_service -> zipkin_server              |                                          |                                |
+|                                   |           | service_registry -> api_gateway            |                                          |                                |
+|                                   |           | config_server -> department_service        |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | api_gateway -> department_service          | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | fails     | api_gateway -> user_service                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | fails     | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> department_service        | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> service_registry          | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | fails     | department_service -> service_registry     | ['restful_http']                         |                                |
+|                                   | fails     | department_service -> zipkin_server        | ['restful_http']                         |                                |
+|                                   | fails     | hystrix_dashboard -> service_registry      | ['restful_http']                         |                                |
+|                                   | fails     | service_registry -> api_gateway            | ['restful_http']                         |                                |
+|                                   | fails     | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | fails     | user_service -> service_registry           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | fails     | user_service -> zipkin_server              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | fails     | zipkin_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

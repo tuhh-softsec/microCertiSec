@@ -1,0 +1,53 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("authorization_server")                                                                                                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("authorization_se | fulfills  | auth_server         | ['infrastructural',                      |                                |
+| rver")                              |           |                     | 'authorization_server',                  |                                |
+|                                     |           |                     | 'authentication_server',                 |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'plaintext_credentials', 'entrypoint',   |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | composite_service   | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | fails     | config_server       | ['infrastructural',                      |                                |
+|                                     |           |                     | 'configuration_server', 'local_logging', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | discovery_server    | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'plaintext_credentials', 'service']      |                                |
+|                                     | fails     | edge_server         | ['infrastructural', 'gateway',           |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | fails     | elasticsearch       | ['infrastructural', 'search_engine',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | fails     | kibana              | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard', 'service']       |                                |
+|                                     | fails     | logstash            | ['infrastructural', 'logging_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | monitor_dashboard   | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard', 'local_logging', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | product_service     | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | rabbitmq            | ['infrastructural', 'message_broker',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | recommendation_serv | ['internal', 'local_logging', 'service'] |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | fails     | review_service      | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | turbine_server      | ['infrastructural', 'monitoring_server', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | zipkin_server       | ['infrastructural', 'tracing_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

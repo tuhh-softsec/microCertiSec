@@ -1,0 +1,64 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("entrypoint").all_have("circuit_breaker")                                                                                       |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("entrypoint")           | included  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | logstash            | ['logging_server', 'external_entity']    |                                |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | admin               | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | excluded  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | excluded  | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | excluded  | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | excluded  | jmx_monitoring      | ['internal', 'service']                  |                                |
+|                                     | excluded  | todo_infra          | ['internal', 'service']                  |                                |
+|                                     | excluded  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | api_gateway         |                                          |                                |
+|                                     |           | oauth               |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("circuit_breaker")      | fulfills  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

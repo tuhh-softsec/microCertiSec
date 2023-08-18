@@ -1,0 +1,54 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_are_connected_to(monitoring_dashboard)                                                                           |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | item_service        | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | included  | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | account_service     | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | included  | customer_service    | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | included  | price_service       | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | included  | discovery_service   | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | foodtray_service    | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'circuit_breaker', 'entrypoint',         |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | store_service       | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | item_service        |                                          |                                |
+|                                     |           | config_service      |                                          |                                |
+|                                     |           | account_service     |                                          |                                |
+|                                     |           | customer_service    |                                          |                                |
+|                                     |           | price_service       |                                          |                                |
+|                                     |           | discovery_service   |                                          |                                |
+|                                     |           | foodtray_service    |                                          |                                |
+|                                     |           | store_service       |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_are_connected_to("monitoring | fulfills  | config_service      | ['configuration_server',                 |                                |
+| _dashboard")                        |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | account_service     | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fails     | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | customer_service    | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fails     | foodtray_service    | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'circuit_breaker', 'entrypoint',         |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | item_service        | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fails     | price_service       | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fails     | store_service       | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

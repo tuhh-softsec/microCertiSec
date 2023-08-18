@@ -1,0 +1,22 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("entrypoint")                                                                                                             |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("entrypoint")     | fulfills  | movie_catalog_servi | ['internal', 'load_balancer',            |                                |
+|                                     |           | ce                  | 'entrypoint', 'service']                 |                                |
+|                                     | fulfills  | movie_info_service  | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fulfills  | ratings_data_servic | ['internal', 'entrypoint', 'service']    |                                |
+|                                     |           | e                   |                                          |                                |
+|                                     | fails     | discovery_server    | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | external_website    | ['external_website', 'external_entity']  |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

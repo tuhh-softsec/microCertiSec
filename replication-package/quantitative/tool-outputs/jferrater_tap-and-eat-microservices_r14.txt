@@ -1,0 +1,94 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | config_service -> discovery_service        | ['restful_http']                         |                                |
+|                                   | included  | config_service -> item_service             | ['restful_http']                         |                                |
+|                                   | included  | config_service -> customer_service         | ['restful_http']                         |                                |
+|                                   | included  | config_service -> foodtray_service         | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | included  | price_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> discovery_service      | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | included  | config_service -> store_service            | ['restful_http']                         |                                |
+|                                   | included  | customer_service -> discovery_service      | ['restful_http']                         |                                |
+|                                   | included  | config_service -> price_service            | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> item_service           | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | included  | config_service -> account_service          | ['restful_http']                         |                                |
+|                                   | included  | account_service -> discovery_service       | ['restful_http']                         |                                |
+|                                   | included  | item_service -> discovery_service          | ['restful_http']                         |                                |
+|                                   | included  | store_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> price_service          | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | config_service -> discovery_service        | ['restful_http']                         |                                |
+|                                   | included  | config_service -> item_service             | ['restful_http']                         |                                |
+|                                   | included  | config_service -> customer_service         | ['restful_http']                         |                                |
+|                                   | included  | config_service -> foodtray_service         | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | included  | price_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> discovery_service      | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | included  | config_service -> store_service            | ['restful_http']                         |                                |
+|                                   | included  | customer_service -> discovery_service      | ['restful_http']                         |                                |
+|                                   | included  | config_service -> price_service            | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> item_service           | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | included  | config_service -> account_service          | ['restful_http']                         |                                |
+|                                   | included  | account_service -> discovery_service       | ['restful_http']                         |                                |
+|                                   | included  | item_service -> discovery_service          | ['restful_http']                         |                                |
+|                                   | included  | store_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | included  | foodtray_service -> price_service          | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | github_repository -> config_service        | ['restful_http']                         |                                |
+|                                   | excluded  | user -> foodtray_service                   | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | config_service -> discovery_service        |                                          |                                |
+|                                   |           | config_service -> item_service             |                                          |                                |
+|                                   |           | config_service -> customer_service         |                                          |                                |
+|                                   |           | config_service -> foodtray_service         |                                          |                                |
+|                                   |           | price_service -> discovery_service         |                                          |                                |
+|                                   |           | foodtray_service -> discovery_service      |                                          |                                |
+|                                   |           | config_service -> store_service            |                                          |                                |
+|                                   |           | customer_service -> discovery_service      |                                          |                                |
+|                                   |           | config_service -> price_service            |                                          |                                |
+|                                   |           | foodtray_service -> item_service           |                                          |                                |
+|                                   |           | config_service -> account_service          |                                          |                                |
+|                                   |           | account_service -> discovery_service       |                                          |                                |
+|                                   |           | item_service -> discovery_service          |                                          |                                |
+|                                   |           | store_service -> discovery_service         |                                          |                                |
+|                                   |           | foodtray_service -> price_service          |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | account_service -> discovery_service       | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> account_service          | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> customer_service         | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> discovery_service        | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> foodtray_service         | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | fails     | config_service -> item_service             | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> price_service            | ['restful_http']                         |                                |
+|                                   | fails     | config_service -> store_service            | ['restful_http']                         |                                |
+|                                   | fails     | customer_service -> discovery_service      | ['restful_http']                         |                                |
+|                                   | fails     | foodtray_service -> discovery_service      | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | fails     | foodtray_service -> item_service           | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | fails     | foodtray_service -> price_service          | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | fails     | item_service -> discovery_service          | ['restful_http']                         |                                |
+|                                   | fails     | price_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | fails     | store_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

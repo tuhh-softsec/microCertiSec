@@ -1,0 +1,34 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.at_least_one_is("monitoring_dashboard")                                                                                                  |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. at_least_one_is("monitoring_dash | fulfills  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+| board")                             |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | database_movie_serv | ['external_database', 'external_entity'] |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | fails     | database_recommenda | ['external_database',                    |                                |
+|                                     |           | tion_service        | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | fails     | database_user_servi | ['external_database',                    |                                |
+|                                     |           | ce                  | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | fails     | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | fails     | movie_service       | ['internal', 'service']                  |                                |
+|                                     | fails     | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | user_service        | ['internal', 'service']                  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

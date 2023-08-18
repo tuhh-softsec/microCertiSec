@@ -1,0 +1,50 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("internal").receiver_is("internal").all_are("authenticated")                                                                                        |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("internal")        | included  | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | department_service -> zipkin_server        | ['restful_http']                         |                                |
+|                                   | excluded  | department_service -> service_registry     | ['restful_http']                         |                                |
+|                                   | excluded  | user_service -> service_registry           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | excluded  | user_service -> zipkin_server              | ['restful_http', 'load_balanced_link']   |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("internal")          | included  | department_service -> zipkin_server        | ['restful_http']                         |                                |
+|                                   | included  | department_service -> service_registry     | ['restful_http']                         |                                |
+|                                   | included  | user_service -> service_registry           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | user_service -> zipkin_server              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | github_repository -> config_server         | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> user_service                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | excluded  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> department_service          | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | excluded  | config_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | excluded  | zipkin_server -> hystrix_dashboard         | ['restful_http']                         |                                |
+|                                   | excluded  | user -> api_gateway                        | ['restful_http']                         |                                |
+|                                   | excluded  | hystrix_dashboard -> service_registry      | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> user_service              | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> service_registry          | ['restful_http']                         |                                |
+|                                   | excluded  | service_registry -> api_gateway            | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> department_service        | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | department_service -> zipkin_server        |                                          |                                |
+|                                   |           | department_service -> service_registry     |                                          |                                |
+|                                   |           | user_service -> service_registry           |                                          |                                |
+|                                   |           | user_service -> department_service         |                                          |                                |
+|                                   |           | user_service -> zipkin_server              |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("authenticated")       | fails     | user_service -> department_service         | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

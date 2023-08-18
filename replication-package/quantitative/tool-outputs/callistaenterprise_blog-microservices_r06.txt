@@ -1,0 +1,110 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("internal").receiver_is("internal").all_are("authorized")                                                                                           |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("internal")        | included  | composite_service -> review_service        | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | composite_service ->                       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   | included  | composite_service -> product_service       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | review_service -> logstash                 | ['restful_http']                         |                                |
+|                                   | excluded  | product_service -> logstash                | ['restful_http']                         |                                |
+|                                   | excluded  | product_service -> discovery_server        | ['restful_http']                         |                                |
+|                                   | excluded  | composite_service -> rabbitmq              | ['restful_http']                         |                                |
+|                                   | excluded  | composite_service -> logstash              | ['restful_http']                         |                                |
+|                                   | excluded  | composite_service -> discovery_server      | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | excluded  | recommendation_service -> logstash         | ['restful_http']                         |                                |
+|                                   | excluded  | recommendation_service -> discovery_server | ['restful_http']                         |                                |
+|                                   | excluded  | review_service -> discovery_server         | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("internal")          | included  | review_service -> logstash                 | ['restful_http']                         |                                |
+|                                   | included  | product_service -> logstash                | ['restful_http']                         |                                |
+|                                   | included  | product_service -> discovery_server        | ['restful_http']                         |                                |
+|                                   | included  | composite_service -> rabbitmq              | ['restful_http']                         |                                |
+|                                   | included  | composite_service -> logstash              | ['restful_http']                         |                                |
+|                                   | included  | composite_service -> discovery_server      | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | recommendation_service -> logstash         | ['restful_http']                         |                                |
+|                                   | included  | recommendation_service -> discovery_server | ['restful_http']                         |                                |
+|                                   | included  | review_service -> discovery_server         | ['restful_http']                         |                                |
+|                                   | included  | composite_service -> review_service        | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | included  | composite_service ->                       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   | included  | composite_service -> product_service       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> auth_server                        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'authenticated',           |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | config_server -> product_service           | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | monitor_dashboard -> discovery_server      | ['restful_http']                         |                                |
+|                                   | excluded  | zipkin_server -> logstash                  | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> recommendation_service    | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | auth_server -> logstash                    | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | logstash -> elasticsearch                  | ['restful_http']                         |                                |
+|                                   | excluded  | github_repository -> config_server         | ['restful_http']                         |                                |
+|                                   | excluded  | elasticsearch -> kibana                    | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> discovery_server          | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | discovery_server -> edge_server            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'authenticated',           |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | edge_server -> auth_server                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'authenticated',           |                                |
+|                                   |           |                                            | 'authorized', 'encrypted']               |                                |
+|                                   | excluded  | config_server -> auth_server               | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'authenticated',           |                                |
+|                                   |           |                                            | 'authorized', 'encrypted']               |                                |
+|                                   | excluded  | discovery_server -> logstash               | ['restful_http']                         |                                |
+|                                   | excluded  | rabbitmq -> turbine_server                 | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> edge_server               | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'authenticated',           |                                |
+|                                   |           |                                            | 'authorized', 'encrypted']               |                                |
+|                                   | excluded  | monitor_dashboard -> logstash              | ['restful_http']                         |                                |
+|                                   | excluded  | user -> edge_server                        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | turbine_server -> monitor_dashboard        | ['restful_http']                         |                                |
+|                                   | excluded  | edge_server -> logstash                    | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | auth_server -> composite_service           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'encrypted']               |                                |
+|                                   | excluded  | config_server -> logstash                  | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | turbine_server -> discovery_server         | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> review_service            | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | edge_server -> composite_service           | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized',           |                                |
+|                                   |           |                                            | 'encrypted']                             |                                |
+|                                   | excluded  | config_server -> monitor_dashboard         | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | rabbitmq -> zipkin_server                  | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> turbine_server            | ['restful_http', 'encrypted']            |                                |
+|                                   | excluded  | config_server -> composite_service         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized', 'encrypted']               |                                |
+|                                   | excluded  | config_server -> rabbitmq                  | ['restful_http', 'encrypted']            |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | review_service -> logstash                 |                                          |                                |
+|                                   |           | product_service -> logstash                |                                          |                                |
+|                                   |           | product_service -> discovery_server        |                                          |                                |
+|                                   |           | composite_service -> rabbitmq              |                                          |                                |
+|                                   |           | composite_service -> logstash              |                                          |                                |
+|                                   |           | composite_service -> discovery_server      |                                          |                                |
+|                                   |           | recommendation_service -> logstash         |                                          |                                |
+|                                   |           | recommendation_service -> discovery_server |                                          |                                |
+|                                   |           | review_service -> discovery_server         |                                          |                                |
+|                                   |           | composite_service -> review_service        |                                          |                                |
+|                                   |           | composite_service ->                       |                                          |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   |           | composite_service -> product_service       |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("authorized")          | fails     | composite_service -> product_service       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | fails     | composite_service ->                       | ['restful_http', 'load_balanced_link']   |                                |
+|                                   |           | recommendation_service                     |                                          |                                |
+|                                   | fails     | composite_service -> review_service        | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

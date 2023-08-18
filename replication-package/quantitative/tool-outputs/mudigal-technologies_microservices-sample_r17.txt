@@ -1,0 +1,41 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.at_least_one_is("message_broker")                                                                                                        |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1.                                  | fulfills  | rabbit              | ['message_broker',                       |                                |
+| at_least_one_is("message_broker")   |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | api_gateway         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | consul              | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | consul2             | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | consul3             | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | elasticsearch       | ['search_engine', 'infrastructural',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | kibana              | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | logstash            | ['logging_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | scope               | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | service_one         | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | service_one_db      | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | service_two         | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | service_two_db      | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | web_application     | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

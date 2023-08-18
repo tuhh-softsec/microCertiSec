@@ -1,0 +1,68 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_are_connected_to(monitoring_dashboard)                                                                           |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | account_service     | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | included  | gateway_server      | ['gateway', 'in_memory_authentication',  |                                |
+|                                     |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | included  | customer_service    | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | auth_server         | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'encryption',   |                                |
+|                                     |           |                     | 'infrastructural', 'resource_server',    |                                |
+|                                     |           |                     | 'token_server', 'local_logging',         |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | database_auth_serve | ['external_database',                    |                                |
+|                                     |           | r                   | 'plaintext_credentials', 'tokenstore',   |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | database_gateway_se | ['external_database',                    |                                |
+|                                     |           | rver                | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | discovery_server    |                                          |                                |
+|                                     |           | account_service     |                                          |                                |
+|                                     |           | gateway_server      |                                          |                                |
+|                                     |           | customer_service    |                                          |                                |
+|                                     |           | auth_server         |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_are_connected_to("monitoring | fails     | account_service     | ['internal', 'pre_authorized_endpoints', |                                |
+| _dashboard")                        |           |                     | 'resource_server', 'service']            |                                |
+|                                     | fails     | auth_server         | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'encryption',   |                                |
+|                                     |           |                     | 'infrastructural', 'resource_server',    |                                |
+|                                     |           |                     | 'token_server', 'local_logging',         |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | fails     | customer_service    | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | gateway_server      | ['gateway', 'in_memory_authentication',  |                                |
+|                                     |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

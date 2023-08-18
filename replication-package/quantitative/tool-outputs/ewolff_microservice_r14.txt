@@ -1,0 +1,65 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | order -> eureka                            | ['restful_http']                         |                                |
+|                                   | included  | order -> turbine                           | ['restful_http']                         |                                |
+|                                   | included  | zuul -> customer                           | ['restful_http']                         |                                |
+|                                   | included  | eureka -> zuul                             | ['restful_http']                         |                                |
+|                                   | included  | customer -> eureka                         | ['restful_http']                         |                                |
+|                                   | included  | catalog -> eureka                          | ['restful_http']                         |                                |
+|                                   | included  | zuul -> catalog                            | ['restful_http']                         |                                |
+|                                   | included  | order -> customer                          | ['restful_http']                         |                                |
+|                                   | included  | order -> catalog                           | ['restful_http']                         |                                |
+|                                   | included  | turbine -> eureka                          | ['restful_http']                         |                                |
+|                                   | included  | zuul -> order                              | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | order -> eureka                            | ['restful_http']                         |                                |
+|                                   | included  | order -> turbine                           | ['restful_http']                         |                                |
+|                                   | included  | zuul -> customer                           | ['restful_http']                         |                                |
+|                                   | included  | eureka -> zuul                             | ['restful_http']                         |                                |
+|                                   | included  | customer -> eureka                         | ['restful_http']                         |                                |
+|                                   | included  | catalog -> eureka                          | ['restful_http']                         |                                |
+|                                   | included  | zuul -> catalog                            | ['restful_http']                         |                                |
+|                                   | included  | order -> customer                          | ['restful_http']                         |                                |
+|                                   | included  | order -> catalog                           | ['restful_http']                         |                                |
+|                                   | included  | turbine -> eureka                          | ['restful_http']                         |                                |
+|                                   | included  | zuul -> order                              | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> zuul                               | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | order -> eureka                            |                                          |                                |
+|                                   |           | order -> turbine                           |                                          |                                |
+|                                   |           | zuul -> customer                           |                                          |                                |
+|                                   |           | eureka -> zuul                             |                                          |                                |
+|                                   |           | customer -> eureka                         |                                          |                                |
+|                                   |           | catalog -> eureka                          |                                          |                                |
+|                                   |           | zuul -> catalog                            |                                          |                                |
+|                                   |           | order -> customer                          |                                          |                                |
+|                                   |           | order -> catalog                           |                                          |                                |
+|                                   |           | turbine -> eureka                          |                                          |                                |
+|                                   |           | zuul -> order                              |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | catalog -> eureka                          | ['restful_http']                         |                                |
+|                                   | fails     | customer -> eureka                         | ['restful_http']                         |                                |
+|                                   | fails     | eureka -> zuul                             | ['restful_http']                         |                                |
+|                                   | fails     | order -> catalog                           | ['restful_http']                         |                                |
+|                                   | fails     | order -> customer                          | ['restful_http']                         |                                |
+|                                   | fails     | order -> eureka                            | ['restful_http']                         |                                |
+|                                   | fails     | order -> turbine                           | ['restful_http']                         |                                |
+|                                   | fails     | turbine -> eureka                          | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> catalog                            | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> customer                           | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> order                              | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

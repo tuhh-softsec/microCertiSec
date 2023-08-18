@@ -1,0 +1,70 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("internal").that_have("local_logging").all_are_connected_to(message_broker)                                                     |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_have("local_logging")       | included  | web_portal          | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | task_webservice     | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | comments_webservice | ['internal', 'resource_server',          |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | user_webservice     | ['internal', 'resource_server',          |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. that_are("internal")             | included  | task_webservice     | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | comments_webservice | ['internal', 'resource_server',          |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | web_portal          | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | user_webservice     | ['internal', 'resource_server',          |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | database_auth_serve | ['external_database',                    |                                |
+|                                     |           | r                   | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | configserver        | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | webservice_registry | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | api_gateway         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | excluded  | auth_server         | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'encryption',         |                                |
+|                                     |           |                     | 'tokenstore', 'plaintext_credentials',   |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authorization_scope_all_requests',      |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | task_webservice     |                                          |                                |
+|                                     |           | comments_webservice |                                          |                                |
+|                                     |           | web_portal          |                                          |                                |
+|                                     |           | user_webservice     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 3. all_are_connected_to("message_br | fails     | web_portal          | ['internal', 'local_logging', 'service'] |                                |
+| oker")                              |           |                     |                                          |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

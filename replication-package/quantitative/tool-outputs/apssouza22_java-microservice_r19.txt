@@ -1,0 +1,109 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_have("local_logging").none_are_connected_to(logging_server)                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_have("local_logging")       | included  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | admin               | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | included  | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | included  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | logstash            | ['logging_server', 'external_entity']    |                                |
+|                                     | excluded  | jmx_monitoring      | ['internal', 'service']                  |                                |
+|                                     | excluded  | todo_infra          | ['internal', 'service']                  |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | api_gateway         |                                          |                                |
+|                                     |           | config_server       |                                          |                                |
+|                                     |           | admin               |                                          |                                |
+|                                     |           | mailer              |                                          |                                |
+|                                     |           | eureka_server       |                                          |                                |
+|                                     |           | user_service        |                                          |                                |
+|                                     |           | oauth               |                                          |                                |
+|                                     |           | proxy               |                                          |                                |
+|                                     |           | reminder            |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. none_are_connected_to("logging_s | fulfills  | admin               | ['administration_server',                |                                |
+| erver")                             |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fulfills  | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fulfills  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fulfills  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fulfills  | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | admin               | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

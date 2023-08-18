@@ -1,0 +1,31 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("service_discovery")                                                                                                      |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1.                                  | fulfills  | discovery_service   | ['service_discovery', 'infrastructural', |                                |
+| exactly_one_is("service_discovery") |           |                     | 'service']                               |                                |
+|                                     | fails     | card_service        | ['internal', 'service']                  |                                |
+|                                     | fails     | card_statement_comp | ['internal', 'circuit_breaker',          |                                |
+|                                     |           | osite               | 'service']                               |                                |
+|                                     | fails     | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | edge_server         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | fails     | monitor_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | statement_service   | ['internal', 'service']                  |                                |
+|                                     | fails     | turbine             | ['monitoring_server', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

@@ -1,0 +1,47 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("internal").that_have("local_logging").all_are_connected_to(message_broker)                                                     |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | statement_service   | ['internal', 'service']                  |                                |
+|                                     | excluded  | card_statement_comp | ['internal', 'circuit_breaker',          |                                |
+|                                     |           | osite               | 'service']                               |                                |
+|                                     | excluded  | card_service        | ['internal', 'service']                  |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. that_are("internal")             | included  | statement_service   | ['internal', 'service']                  |                                |
+|                                     | included  | card_statement_comp | ['internal', 'circuit_breaker',          |                                |
+|                                     |           | osite               | 'service']                               |                                |
+|                                     | included  | card_service        | ['internal', 'service']                  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | turbine             | ['monitoring_server', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | discovery_service   | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | monitor_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | edge_server         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | statement_service   |                                          |                                |
+|                                     |           | card_statement_comp |                                          |                                |
+|                                     |           | osite               |                                          |                                |
+|                                     |           | card_service        |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

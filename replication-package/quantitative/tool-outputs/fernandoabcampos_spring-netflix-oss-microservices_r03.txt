@@ -1,0 +1,40 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("entrypoint").all_have("load_balancer")                                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("entrypoint")           | included  | edge_server         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | turbine             | ['monitoring_server', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | statement_service   | ['internal', 'service']                  |                                |
+|                                     | excluded  | card_statement_comp | ['internal', 'circuit_breaker',          |                                |
+|                                     |           | osite               | 'service']                               |                                |
+|                                     | excluded  | discovery_service   | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | monitor_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | card_service        | ['internal', 'service']                  |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | edge_server         |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("load_balancer")        | fulfills  | edge_server         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

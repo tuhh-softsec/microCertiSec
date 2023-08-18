@@ -1,0 +1,26 @@
+
++-------------------------+-----------+----------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                             |
+|    edges.sender_is("service").receiver_is("external_entity").all_are("encrypted").AND(edges.sender_is("external_entity").receiver_is("service").all_are("encrypted"))|
++-------------------------+-----------+----------------------+------------------------------------------+--------------------------------+
+| Step                    | Decision  | Node / Edge          | Stereotypes                              | Traceability                   |
++-------------------------+-----------+----------------------+------------------------------------------+--------------------------------+
+| ### Property checks ### |           |                      |                                          |                                |
+| ----------------------- | --------- | -------------------- | ---------------------------------------- | ------------------------------ |
+| 1. all_are("encrypted") | fails     | admin -> logstash    | ['restful_http']                         |                                |
+|                         | fails     | api_gateway ->       | ['restful_http']                         |                                |
+|                         |           | logstash             |                                          |                                |
+|                         | fails     | config_server ->     | ['restful_http']                         |                                |
+|                         |           | logstash             |                                          |                                |
+|                         | fails     | eureka_server ->     | ['restful_http']                         |                                |
+|                         |           | logstash             |                                          |                                |
+|                         | fails     | mailer -> logstash   | ['restful_http']                         |                                |
+|                         | fails     | oauth -> logstash    | ['restful_http']                         |                                |
+|                         | fails     | proxy -> logstash    | ['restful_http']                         |                                |
+|                         | fails     | reminder -> logstash | ['restful_http']                         |                                |
+|                         | fails     | user_service ->      | ['restful_http']                         |                                |
+|                         |           | logstash             |                                          |                                |
+|                         | --------- | -------------------- | ---------------------------------------- | ------------------------------ |
+|                Verdict  | False     |                      | Property check requires all to have it,  |                                |
+|                         |           |                      | only x has it                            |                                |
++-------------------------+-----------+----------------------+------------------------------------------+--------------------------------+

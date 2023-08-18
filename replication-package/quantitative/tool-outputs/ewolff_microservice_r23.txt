@@ -1,0 +1,26 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("service_discovery")                                                                                                      |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1.                                  | fulfills  | eureka              | ['service_discovery', 'infrastructural', |                                |
+| exactly_one_is("service_discovery") |           |                     | 'service']                               |                                |
+|                                     | fails     | catalog             | ['internal', 'service']                  |                                |
+|                                     | fails     | customer            | ['internal', 'service']                  |                                |
+|                                     | fails     | order               | ['internal', 'load_balancer',            |                                |
+|                                     |           |                     | 'circuit_breaker', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | turbine             | ['monitoring_server',                    |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | zuul                | ['gateway', 'load_balancer',             |                                |
+|                                     |           |                     | 'circuit_breaker', 'infrastructural',    |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

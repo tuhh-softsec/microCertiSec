@@ -1,0 +1,51 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("entrypoint").all_have("circuit_breaker")                                                                                       |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("entrypoint")           | included  | gateway_server      | ['gateway', 'in_memory_authentication',  |                                |
+|                                     |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | account_service     | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | customer_service    | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | database_auth_serve | ['external_database',                    |                                |
+|                                     |           | r                   | 'plaintext_credentials', 'tokenstore',   |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | auth_server         | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'encryption',   |                                |
+|                                     |           |                     | 'infrastructural', 'resource_server',    |                                |
+|                                     |           |                     | 'token_server', 'local_logging',         |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | excluded  | database_gateway_se | ['external_database',                    |                                |
+|                                     |           | rver                | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | gateway_server      |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("circuit_breaker")      | fulfills  | gateway_server      | ['gateway', 'in_memory_authentication',  |                                |
+|                                     |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

@@ -1,0 +1,36 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("authentication_server").none_are("['administration_server', 'configuration_server', 'gateway', 'message_broker', 'service_discovery', 'search_engine', 'web_application', 'web_server', 'authorization_server', 'logging_server', 'metrics_server', 'monitoring_dashboard', 'monitoring_server', 'tracing_server']")|
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | turbine             | ['monitoring_server', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | statement_service   | ['internal', 'service']                  |                                |
+|                                     | excluded  | card_statement_comp | ['internal', 'circuit_breaker',          |                                |
+|                                     |           | osite               | 'service']                               |                                |
+|                                     | excluded  | discovery_service   | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | monitor_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | edge_server         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | excluded  | card_service        | ['internal', 'service']                  |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

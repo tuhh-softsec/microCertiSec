@@ -1,0 +1,338 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | registry -> gateway                        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> rabbitmq                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> rabbitmq           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> notification_service             | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_mongodb -> auth_service               | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | auth_service -> registry                   | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | notification_mongodb ->                    | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           | notification_service                       | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> account_service    | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_mongodb -> account_service         | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | config -> auth_service                     | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | rabbitmq -> turbine_stream_service         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> account_service                 | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> gateway                          | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> registry                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> registry           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> auth_service                    | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'auth_provider',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | turbine_stream_service -> monitoring       | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> account_service            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> turbine_stream_service           | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | account_service -> registry                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | config -> monitoring                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | statistics_service -> registry             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> notification_service       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | turbine_stream_service -> registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> statistics_service         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> account_service                  | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> statistics_service      | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> notification_service            | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | statistics_service -> rabbitmq             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | statistics_mongodb -> statistics_service   | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | gateway -> statistics_service              | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> auth_service            | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> statistics_service               | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | notification_service -> mail_server        | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | registry -> gateway                        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> rabbitmq                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> rabbitmq           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> notification_service             | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_mongodb -> auth_service               | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | auth_service -> registry                   | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | notification_mongodb ->                    | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           | notification_service                       | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> account_service    | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_mongodb -> account_service         | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | config -> auth_service                     | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | rabbitmq -> turbine_stream_service         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> account_service                 | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> gateway                          | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> registry                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | notification_service -> mail_server        | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | notification_service -> registry           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> auth_service                    | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'auth_provider',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | turbine_stream_service -> monitoring       | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> account_service            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> turbine_stream_service           | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | account_service -> registry                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | config -> monitoring                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | statistics_service -> registry             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> notification_service       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | turbine_stream_service -> registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_service -> statistics_service         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> account_service                  | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> statistics_service      | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | gateway -> notification_service            | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | statistics_service -> rabbitmq             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | statistics_mongodb -> statistics_service   | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | included  | gateway -> statistics_service              | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | account_service -> auth_service            | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | config -> statistics_service               | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | external_website -> statistics_service     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | user -> gateway                            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | registry -> gateway                        |                                          |                                |
+|                                   |           | account_service -> rabbitmq                |                                          |                                |
+|                                   |           | notification_service -> rabbitmq           |                                          |                                |
+|                                   |           | config -> notification_service             |                                          |                                |
+|                                   |           | auth_mongodb -> auth_service               |                                          |                                |
+|                                   |           | auth_service -> registry                   |                                          |                                |
+|                                   |           | notification_mongodb ->                    |                                          |                                |
+|                                   |           | notification_service                       |                                          |                                |
+|                                   |           | notification_service -> account_service    |                                          |                                |
+|                                   |           | account_mongodb -> account_service         |                                          |                                |
+|                                   |           | config -> auth_service                     |                                          |                                |
+|                                   |           | rabbitmq -> turbine_stream_service         |                                          |                                |
+|                                   |           | gateway -> account_service                 |                                          |                                |
+|                                   |           | config -> gateway                          |                                          |                                |
+|                                   |           | config -> registry                         |                                          |                                |
+|                                   |           | notification_service -> mail_server        |                                          |                                |
+|                                   |           | notification_service -> registry           |                                          |                                |
+|                                   |           | gateway -> auth_service                    |                                          |                                |
+|                                   |           | turbine_stream_service -> monitoring       |                                          |                                |
+|                                   |           | auth_service -> account_service            |                                          |                                |
+|                                   |           | config -> turbine_stream_service           |                                          |                                |
+|                                   |           | account_service -> registry                |                                          |                                |
+|                                   |           | config -> monitoring                       |                                          |                                |
+|                                   |           | statistics_service -> registry             |                                          |                                |
+|                                   |           | auth_service -> notification_service       |                                          |                                |
+|                                   |           | turbine_stream_service -> registry         |                                          |                                |
+|                                   |           | auth_service -> statistics_service         |                                          |                                |
+|                                   |           | config -> account_service                  |                                          |                                |
+|                                   |           | account_service -> statistics_service      |                                          |                                |
+|                                   |           | gateway -> notification_service            |                                          |                                |
+|                                   |           | statistics_service -> rabbitmq             |                                          |                                |
+|                                   |           | statistics_mongodb -> statistics_service   |                                          |                                |
+|                                   |           | gateway -> statistics_service              |                                          |                                |
+|                                   |           | account_service -> auth_service            |                                          |                                |
+|                                   |           | config -> statistics_service               |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | account_mongodb -> account_service         | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | account_service -> auth_service            | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | account_service -> rabbitmq                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | account_service -> registry                | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | account_service -> statistics_service      | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'circuit_breaker_link',                  |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_mongodb -> auth_service               | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | auth_service -> account_service            | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_service -> notification_service       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_service -> registry                   | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_service -> statistics_service         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'auth_provider', 'authentication_with_pl |                                |
+|                                   |           |                                            | aintext_credentials', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> account_service                  | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> auth_service                     | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> gateway                          | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> monitoring                       | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | config -> notification_service             | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> registry                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | config -> statistics_service               | ['plaintext_credentials_link',           |                                |
+|                                   |           |                                            | 'restful_http', 'authenticated',         |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | config -> turbine_stream_service           | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link',            |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | gateway -> account_service                 | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | gateway -> auth_service                    | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'auth_provider',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | gateway -> notification_service            | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | gateway -> statistics_service              | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | notification_mongodb ->                    | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           | notification_service                       | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | notification_service -> account_service    | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | notification_service -> rabbitmq           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | notification_service -> registry           | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | rabbitmq -> turbine_stream_service         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | registry -> gateway                        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | statistics_mongodb -> statistics_service   | ['jdbc', 'plaintext_credentials_link',   |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | fails     | statistics_service -> rabbitmq             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | statistics_service -> registry             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | turbine_stream_service -> monitoring       | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | turbine_stream_service -> registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

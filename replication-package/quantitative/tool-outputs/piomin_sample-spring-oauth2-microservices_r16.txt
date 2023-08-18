@@ -1,0 +1,39 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("logging_server")                                                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("logging_server") | fails     | account_service     | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | fails     | auth_server         | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'encryption',   |                                |
+|                                     |           |                     | 'infrastructural', 'resource_server',    |                                |
+|                                     |           |                     | 'token_server', 'local_logging',         |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | fails     | customer_service    | ['internal', 'pre_authorized_endpoints', |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | database_auth_serve | ['external_database',                    |                                |
+|                                     |           | r                   | 'plaintext_credentials', 'tokenstore',   |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | fails     | database_gateway_se | ['external_database',                    |                                |
+|                                     |           | rver                | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | fails     | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | gateway_server      | ['gateway', 'in_memory_authentication',  |                                |
+|                                     |           |                     | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'infrastructural',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

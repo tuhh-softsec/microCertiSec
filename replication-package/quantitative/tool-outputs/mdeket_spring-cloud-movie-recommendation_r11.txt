@@ -1,0 +1,39 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("authentication_server").none_are("['administration_server', 'configuration_server', 'gateway', 'message_broker', 'service_discovery', 'search_engine', 'web_application', 'web_server', 'authorization_server', 'logging_server', 'metrics_server', 'monitoring_dashboard', 'monitoring_server', 'tracing_server']")|
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | database_user_servi | ['external_database',                    |                                |
+|                                     |           | ce                  | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | database_recommenda | ['external_database',                    |                                |
+|                                     |           | tion_service        | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | user_service        | ['internal', 'service']                  |                                |
+|                                     | excluded  | movie_service       | ['internal', 'service']                  |                                |
+|                                     | excluded  | database_movie_serv | ['external_database', 'external_entity'] |                                |
+|                                     |           | ice                 |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

@@ -1,0 +1,48 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_have("log_sanitization")                                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | postgres            | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | invoicing           | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | order               | ['internal', 'service']                  |                                |
+|                                     | included  | shipping            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | apache              | ['web_server', 'infrastructural',        |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | postgres            |                                          |                                |
+|                                     |           | zookeeper           |                                          |                                |
+|                                     |           | invoicing           |                                          |                                |
+|                                     |           | kafka               |                                          |                                |
+|                                     |           | order               |                                          |                                |
+|                                     |           | shipping            |                                          |                                |
+|                                     |           | apache              |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("log_sanitization")     | fails     | apache              | ['web_server', 'infrastructural',        |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | invoicing           | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | order               | ['internal', 'service']                  |                                |
+|                                     | fails     | postgres            | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | shipping            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

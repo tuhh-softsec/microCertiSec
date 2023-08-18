@@ -1,0 +1,76 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_have("local_logging").none_are_connected_to(logging_server)                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_have("local_logging")       | included  | web_portal          | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'monitoring_server',                     |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | included  | user_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | comments_webservice | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | included  | task_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'resource_server', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'load_balancer', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | api_gateway         | ['infrastructural', 'gateway',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'csrf_disabled', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | auth_server         | ['infrastructural',                      |                                |
+|                                     |           |                     | 'authorization_server',                  |                                |
+|                                     |           |                     | 'authentication_server',                 |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'plaintext_credentials', 'entrypoint',   |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | configserver        | ['infrastructural',                      |                                |
+|                                     |           |                     | 'configuration_server', 'service']       |                                |
+|                                     | excluded  | webservice_registry | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | mysqldb             | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | zipkin_tracing      | ['infrastructural', 'tracing_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | web_portal          |                                          |                                |
+|                                     |           | user_webservice     |                                          |                                |
+|                                     |           | comments_webservice |                                          |                                |
+|                                     |           | task_webservice     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. none_are_connected_to("logging_s | fails     | comments_webservice | ['internal', 'local_logging',            |                                |
+| erver")                             |           |                     | 'resource_server', 'service']            |                                |
+|                                     | fails     | task_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'resource_server', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'load_balancer', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | user_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | web_portal          | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'monitoring_server',                     |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

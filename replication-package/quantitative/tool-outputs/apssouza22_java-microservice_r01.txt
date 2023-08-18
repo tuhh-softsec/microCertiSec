@@ -1,0 +1,46 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("entrypoint")                                                                                                             |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("entrypoint")     | fulfills  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fulfills  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | admin               | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | jmx_monitoring      | ['internal', 'service']                  |                                |
+|                                     | fails     | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | logstash            | ['logging_server', 'external_entity']    |                                |
+|                                     | fails     | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | todo_infra          | ['internal', 'service']                  |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

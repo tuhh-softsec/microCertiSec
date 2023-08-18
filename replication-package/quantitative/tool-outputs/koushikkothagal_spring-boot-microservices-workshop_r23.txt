@@ -1,0 +1,21 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("service_discovery")                                                                                                      |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1.                                  | fulfills  | discovery_server    | ['infrastructural', 'service_discovery', |                                |
+| exactly_one_is("service_discovery") |           |                     | 'service']                               |                                |
+|                                     | fails     | external_website    | ['external_website', 'external_entity']  |                                |
+|                                     | fails     | movie_catalog_servi | ['internal', 'load_balancer',            |                                |
+|                                     |           | ce                  | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | movie_info_service  | ['internal', 'entrypoint', 'service']    |                                |
+|                                     | fails     | ratings_data_servic | ['internal', 'entrypoint', 'service']    |                                |
+|                                     |           | e                   |                                          |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

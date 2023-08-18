@@ -1,0 +1,50 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("internal").that_have("local_logging").all_are_connected_to(message_broker)                                                     |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | excluded  | user_service        | ['internal', 'service']                  |                                |
+|                                     | excluded  | movie_service       | ['internal', 'service']                  |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. that_are("internal")             | included  | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | included  | user_service        | ['internal', 'service']                  |                                |
+|                                     | included  | movie_service       | ['internal', 'service']                  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | database_user_servi | ['external_database',                    |                                |
+|                                     |           | ce                  | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | database_recommenda | ['external_database',                    |                                |
+|                                     |           | tion_service        | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | database_movie_serv | ['external_database', 'external_entity'] |                                |
+|                                     |           | ice                 |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | recommendation_serv |                                          |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     |           | user_service        |                                          |                                |
+|                                     |           | movie_service       |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

@@ -1,0 +1,28 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("authentication_server")                                                                                                  |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("authentication_s | fails     | catalog             | ['internal', 'service']                  |                                |
+| erver")                             |           |                     |                                          |                                |
+|                                     | fails     | customer            | ['internal', 'service']                  |                                |
+|                                     | fails     | eureka              | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | order               | ['internal', 'load_balancer',            |                                |
+|                                     |           |                     | 'circuit_breaker', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | turbine             | ['monitoring_server',                    |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | zuul                | ['gateway', 'load_balancer',             |                                |
+|                                     |           |                     | 'circuit_breaker', 'infrastructural',    |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

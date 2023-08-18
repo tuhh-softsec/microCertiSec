@@ -1,0 +1,46 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("entrypoint").all_have("authentication")                                                                                        |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("entrypoint")           | included  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | database_user_servi | ['external_database',                    |                                |
+|                                     |           | ce                  | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | database_recommenda | ['external_database',                    |                                |
+|                                     |           | tion_service        | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | user_service        | ['internal', 'service']                  |                                |
+|                                     | excluded  | movie_service       | ['internal', 'service']                  |                                |
+|                                     | excluded  | database_movie_serv | ['external_database', 'external_entity'] |                                |
+|                                     |           | ice                 |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | recommendation_clie |                                          |                                |
+|                                     |           | nt                  |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("authentication")       | fails     | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

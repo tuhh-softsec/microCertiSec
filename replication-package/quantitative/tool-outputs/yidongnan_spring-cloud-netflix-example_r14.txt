@@ -1,0 +1,129 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | zuul -> zipkin                             | ['restful_http']                         |                                |
+|                                   | included  | service_b -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | included  | zuul -> rabbitmq                           | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> eureka_server           | ['restful_http']                         |                                |
+|                                   | included  | config_server -> rabbitmq                  | ['restful_http']                         |                                |
+|                                   | included  | service_a -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | included  | service_a -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | included  | service_a -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> rabbitmq                | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> config_server           | ['restful_http']                         |                                |
+|                                   | included  | config_server -> service_a                 | ['restful_http']                         |                                |
+|                                   | included  | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | included  | service_b -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | included  | hystrix_dashboard -> eureka_server         | ['restful_http']                         |                                |
+|                                   | included  | zuul -> config_server                      | ['restful_http']                         |                                |
+|                                   | included  | service_b -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> zuul                    | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> service_a               | ['restful_http']                         |                                |
+|                                   | included  | service_a -> service_b                     | ['restful_http', 'feign_connection']     |                                |
+|                                   | included  | service_b -> zipkin                        | ['restful_http']                         |                                |
+|                                   | included  | config_server -> service_b                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> service_b               | ['restful_http']                         |                                |
+|                                   | included  | eureka_server -> zuul                      | ['restful_http']                         |                                |
+|                                   | included  | zuul -> service_a                          | ['restful_http']                         |                                |
+|                                   | included  | service_a -> zipkin                        | ['restful_http']                         |                                |
+|                                   | included  | rabbitmq -> zipkin                         | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> hystrix_dashboard       | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | zuul -> zipkin                             | ['restful_http']                         |                                |
+|                                   | included  | service_b -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | included  | zuul -> rabbitmq                           | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> eureka_server           | ['restful_http']                         |                                |
+|                                   | included  | config_server -> rabbitmq                  | ['restful_http']                         |                                |
+|                                   | included  | service_a -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | included  | service_a -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | included  | service_a -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> rabbitmq                | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> config_server           | ['restful_http']                         |                                |
+|                                   | included  | config_server -> service_a                 | ['restful_http']                         |                                |
+|                                   | included  | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | included  | service_b -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | included  | hystrix_dashboard -> eureka_server         | ['restful_http']                         |                                |
+|                                   | included  | zuul -> config_server                      | ['restful_http']                         |                                |
+|                                   | included  | service_b -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> zuul                    | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> service_a               | ['restful_http']                         |                                |
+|                                   | included  | service_a -> service_b                     | ['restful_http', 'feign_connection']     |                                |
+|                                   | included  | service_b -> zipkin                        | ['restful_http']                         |                                |
+|                                   | included  | config_server -> service_b                 | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> service_b               | ['restful_http']                         |                                |
+|                                   | included  | eureka_server -> zuul                      | ['restful_http']                         |                                |
+|                                   | included  | zuul -> service_a                          | ['restful_http']                         |                                |
+|                                   | included  | service_a -> zipkin                        | ['restful_http']                         |                                |
+|                                   | included  | rabbitmq -> zipkin                         | ['restful_http']                         |                                |
+|                                   | included  | admin_dashboard -> hystrix_dashboard       | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> zuul                               | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | zuul -> zipkin                             |                                          |                                |
+|                                   |           | service_b -> hystrix_dashboard             |                                          |                                |
+|                                   |           | zuul -> rabbitmq                           |                                          |                                |
+|                                   |           | admin_dashboard -> eureka_server           |                                          |                                |
+|                                   |           | config_server -> rabbitmq                  |                                          |                                |
+|                                   |           | service_a -> hystrix_dashboard             |                                          |                                |
+|                                   |           | service_a -> rabbitmq                      |                                          |                                |
+|                                   |           | service_a -> eureka_server                 |                                          |                                |
+|                                   |           | admin_dashboard -> rabbitmq                |                                          |                                |
+|                                   |           | admin_dashboard -> config_server           |                                          |                                |
+|                                   |           | config_server -> service_a                 |                                          |                                |
+|                                   |           | config_server -> eureka_server             |                                          |                                |
+|                                   |           | service_b -> rabbitmq                      |                                          |                                |
+|                                   |           | hystrix_dashboard -> eureka_server         |                                          |                                |
+|                                   |           | zuul -> config_server                      |                                          |                                |
+|                                   |           | service_b -> eureka_server                 |                                          |                                |
+|                                   |           | admin_dashboard -> zuul                    |                                          |                                |
+|                                   |           | admin_dashboard -> service_a               |                                          |                                |
+|                                   |           | service_a -> service_b                     |                                          |                                |
+|                                   |           | service_b -> zipkin                        |                                          |                                |
+|                                   |           | config_server -> service_b                 |                                          |                                |
+|                                   |           | admin_dashboard -> service_b               |                                          |                                |
+|                                   |           | eureka_server -> zuul                      |                                          |                                |
+|                                   |           | zuul -> service_a                          |                                          |                                |
+|                                   |           | service_a -> zipkin                        |                                          |                                |
+|                                   |           | rabbitmq -> zipkin                         |                                          |                                |
+|                                   |           | admin_dashboard -> hystrix_dashboard       |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | admin_dashboard -> config_server           | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> eureka_server           | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> hystrix_dashboard       | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> rabbitmq                | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> service_a               | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> service_b               | ['restful_http']                         |                                |
+|                                   | fails     | admin_dashboard -> zuul                    | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> eureka_server             | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> rabbitmq                  | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> service_a                 | ['restful_http']                         |                                |
+|                                   | fails     | config_server -> service_b                 | ['restful_http']                         |                                |
+|                                   | fails     | eureka_server -> zuul                      | ['restful_http']                         |                                |
+|                                   | fails     | hystrix_dashboard -> eureka_server         | ['restful_http']                         |                                |
+|                                   | fails     | rabbitmq -> zipkin                         | ['restful_http']                         |                                |
+|                                   | fails     | service_a -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | fails     | service_a -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | fails     | service_a -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | fails     | service_a -> service_b                     | ['restful_http', 'feign_connection']     |                                |
+|                                   | fails     | service_a -> zipkin                        | ['restful_http']                         |                                |
+|                                   | fails     | service_b -> eureka_server                 | ['restful_http']                         |                                |
+|                                   | fails     | service_b -> hystrix_dashboard             | ['restful_http']                         |                                |
+|                                   | fails     | service_b -> rabbitmq                      | ['restful_http']                         |                                |
+|                                   | fails     | service_b -> zipkin                        | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> config_server                      | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> rabbitmq                           | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> service_a                          | ['restful_http']                         |                                |
+|                                   | fails     | zuul -> zipkin                             | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

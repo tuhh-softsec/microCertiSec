@@ -1,0 +1,62 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service_discovery").all_have("validate_registration")                                                                          |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service_discovery")    | included  | discovery_server    | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'plaintext_credentials', 'service']      |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | edge_server         | ['infrastructural', 'gateway',           |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'service']             |                                |
+|                                     | excluded  | config_server       | ['infrastructural',                      |                                |
+|                                     |           |                     | 'configuration_server', 'local_logging', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | logstash            | ['infrastructural', 'logging_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | kibana              | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard', 'service']       |                                |
+|                                     | excluded  | zipkin_server       | ['infrastructural', 'tracing_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | turbine_server      | ['infrastructural', 'monitoring_server', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | excluded  | auth_server         | ['infrastructural',                      |                                |
+|                                     |           |                     | 'authorization_server',                  |                                |
+|                                     |           |                     | 'authentication_server',                 |                                |
+|                                     |           |                     | 'resource_server', 'local_logging',      |                                |
+|                                     |           |                     | 'plaintext_credentials', 'entrypoint',   |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | recommendation_serv | ['internal', 'local_logging', 'service'] |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | excluded  | product_service     | ['internal', 'local_logging', 'service'] |                                |
+|                                     | excluded  | monitor_dashboard   | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard', 'local_logging', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | composite_service   | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | excluded  | elasticsearch       | ['infrastructural', 'search_engine',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | review_service      | ['internal', 'local_logging', 'service'] |                                |
+|                                     | excluded  | rabbitmq            | ['infrastructural', 'message_broker',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | discovery_server    |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2.                                  | fails     | discovery_server    | ['infrastructural', 'service_discovery', |                                |
+| all_have("validate_registration")   |           |                     | 'plaintext_credentials', 'service']      |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

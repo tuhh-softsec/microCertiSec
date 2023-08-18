@@ -1,0 +1,60 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_have("local_logging")                                                                                            |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | included  | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | included  | user_service        | ['internal', 'service']                  |                                |
+|                                     | included  | movie_service       | ['internal', 'service']                  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | database_user_servi | ['external_database',                    |                                |
+|                                     |           | ce                  | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | database_recommenda | ['external_database',                    |                                |
+|                                     |           | tion_service        | 'plaintext_credentials',                 |                                |
+|                                     |           |                     | 'external_entity']                       |                                |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | database_movie_serv | ['external_database', 'external_entity'] |                                |
+|                                     |           | ice                 |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | recommendation_serv |                                          |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     |           | eureka_service      |                                          |                                |
+|                                     |           | config_service      |                                          |                                |
+|                                     |           | recommendation_clie |                                          |                                |
+|                                     |           | nt                  |                                          |                                |
+|                                     |           | user_service        |                                          |                                |
+|                                     |           | movie_service       |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("local_logging")        | fulfills  | recommendation_clie | ['gateway', 'monitoring_dashboard',      |                                |
+|                                     |           | nt                  | 'local_logging', 'infrastructural',      |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | config_service      | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | eureka_service      | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | movie_service       | ['internal', 'service']                  |                                |
+|                                     | fails     | recommendation_serv | ['internal', 'service']                  |                                |
+|                                     |           | ice                 |                                          |                                |
+|                                     | fails     | user_service        | ['internal', 'service']                  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

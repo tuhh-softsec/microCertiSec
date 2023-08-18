@@ -1,0 +1,72 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("service").all_have("log_sanitization")                                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_are("service")              | included  | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | grafana_server      | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | customers_service   | ['in_memory_data_store',                 |                                |
+|                                     |           |                     | 'local_logging', 'internal', 'service']  |                                |
+|                                     | included  | visits_service      | ['in_memory_data_store',                 |                                |
+|                                     |           |                     | 'local_logging', 'internal', 'service']  |                                |
+|                                     | included  | api_gateway         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | included  | vets_service        | ['in_memory_data_store', 'internal',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | admin_server        | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | included  | tracing_server      | ['tracing_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | included  | prometheus_server   | ['metrics_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | discovery_server    |                                          |                                |
+|                                     |           | config_server       |                                          |                                |
+|                                     |           | grafana_server      |                                          |                                |
+|                                     |           | customers_service   |                                          |                                |
+|                                     |           | visits_service      |                                          |                                |
+|                                     |           | api_gateway         |                                          |                                |
+|                                     |           | vets_service        |                                          |                                |
+|                                     |           | admin_server        |                                          |                                |
+|                                     |           | tracing_server      |                                          |                                |
+|                                     |           | prometheus_server   |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. all_have("log_sanitization")     | fails     | admin_server        | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | api_gateway         | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | customers_service   | ['in_memory_data_store',                 |                                |
+|                                     |           |                     | 'local_logging', 'internal', 'service']  |                                |
+|                                     | fails     | discovery_server    | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | grafana_server      | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | fails     | prometheus_server   | ['metrics_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | tracing_server      | ['tracing_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | vets_service        | ['in_memory_data_store', 'internal',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | visits_service      | ['in_memory_data_store',                 |                                |
+|                                     |           |                     | 'local_logging', 'internal', 'service']  |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

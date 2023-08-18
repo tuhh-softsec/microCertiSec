@@ -1,0 +1,51 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("authentication_server")                                                                                                  |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("authentication_s | fulfills  | auth_server         | ['infrastructural',                      |                                |
+| erver")                             |           |                     | 'authorization_server',                  |                                |
+|                                     |           |                     | 'authentication_server',                 |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'plaintext_credentials', 'entrypoint',   |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | api_gateway         | ['infrastructural', 'gateway',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'csrf_disabled', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | comments_webservice | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'resource_server', 'service']            |                                |
+|                                     | fails     | configserver        | ['infrastructural',                      |                                |
+|                                     |           |                     | 'configuration_server', 'service']       |                                |
+|                                     | fails     | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | fails     | mysqldb             | ['database', 'plaintext_credentials',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | task_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'resource_server', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'load_balancer', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | user_webservice     | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'resource_server',                       |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | web_portal          | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'monitoring_server',                     |                                |
+|                                     |           |                     | 'authentication_scope_all_requests',     |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | fails     | webservice_registry | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | zipkin_tracing      | ['infrastructural', 'tracing_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

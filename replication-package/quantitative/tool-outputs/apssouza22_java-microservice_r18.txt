@@ -1,0 +1,68 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("internal").that_have("local_logging").all_are_connected_to(message_broker)                                                     |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. that_have("local_logging")       | included  | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | jmx_monitoring      | ['internal', 'service']                  |                                |
+|                                     | excluded  | todo_infra          | ['internal', 'service']                  |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. that_are("internal")             | included  | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | included  | jmx_monitoring      | ['internal', 'service']                  |                                |
+|                                     | included  | todo_infra          | ['internal', 'service']                  |                                |
+|                                     | included  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | api_gateway         | ['gateway', 'circuit_breaker',           |                                |
+|                                     |           |                     | 'resource_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'csrf_disabled', 'local_logging',        |                                |
+|                                     |           |                     | 'entrypoint', 'authorization',           |                                |
+|                                     |           |                     | 'authentication', 'load_balancer',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | zookeeper           | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | kafka               | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | logstash            | ['logging_server', 'external_entity']    |                                |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | admin               | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+|                                     | excluded  | oauth               | ['authorization_server',                 |                                |
+|                                     |           |                     | 'authentication_server', 'tokenstore',   |                                |
+|                                     |           |                     | 'infrastructural', 'circuit_breaker',    |                                |
+|                                     |           |                     | 'local_logging', 'entrypoint',           |                                |
+|                                     |           |                     | 'authorization', 'authentication',       |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | proxy               | ['web_application', 'infrastructural',   |                                |
+|                                     |           |                     | 'local_logging', 'service']              |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | mailer              |                                          |                                |
+|                                     |           | user_service        |                                          |                                |
+|                                     |           | jmx_monitoring      |                                          |                                |
+|                                     |           | todo_infra          |                                          |                                |
+|                                     |           | reminder            |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 3. all_are_connected_to("message_br | fulfills  | reminder            | ['internal', 'local_logging', 'service'] |                                |
+| oker")                              |           |                     |                                          |                                |
+|                                     | fails     | mailer              | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | reminder            | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | user_service        | ['internal', 'local_logging', 'service'] |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

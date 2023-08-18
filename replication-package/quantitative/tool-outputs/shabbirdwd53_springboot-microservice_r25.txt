@@ -1,0 +1,30 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.exactly_one_is("secret_manager")                                                                                                         |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 1. exactly_one_is("secret_manager") | fails     | api_gateway         | ['infrastructural', 'gateway',           |                                |
+|                                     |           |                     | 'circuit_breaker', 'load_balancer',      |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | fails     | config_server       | ['infrastructural',                      |                                |
+|                                     |           |                     | 'configuration_server', 'service']       |                                |
+|                                     | fails     | department_service  | ['internal', 'local_logging', 'service'] |                                |
+|                                     | fails     | github_repository   | ['github_repository', 'external_entity'] |                                |
+|                                     | fails     | hystrix_dashboard   | ['infrastructural',                      |                                |
+|                                     |           |                     | 'monitoring_dashboard', 'local_logging', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | service_registry    | ['infrastructural', 'service_discovery', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | fails     | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | fails     | user_service        | ['internal', 'local_logging',            |                                |
+|                                     |           |                     | 'load_balancer', 'service']              |                                |
+|                                     | fails     | zipkin_server       | ['infrastructural', 'tracing_server',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

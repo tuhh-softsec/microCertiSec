@@ -1,0 +1,70 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | included  | postgres -> invoicing                      | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | apache -> shipping                         | ['restful_http']                         |                                |
+|                                   | included  | postgres -> shipping                       | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | postgres -> order                          | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | order -> kafka                             | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | included  | kafka -> shipping                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | kafka -> invoicing                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | apache -> order                            | ['restful_http']                         |                                |
+|                                   | included  | apache -> invoicing                        | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | included  | postgres -> invoicing                      | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | apache -> shipping                         | ['restful_http']                         |                                |
+|                                   | included  | postgres -> shipping                       | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | postgres -> order                          | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | included  | order -> kafka                             | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | included  | kafka -> shipping                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | kafka -> invoicing                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | included  | apache -> order                            | ['restful_http']                         |                                |
+|                                   | included  | apache -> invoicing                        | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> apache                             | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | zookeeper -> kafka                         |                                          |                                |
+|                                   |           | postgres -> invoicing                      |                                          |                                |
+|                                   |           | apache -> shipping                         |                                          |                                |
+|                                   |           | postgres -> shipping                       |                                          |                                |
+|                                   |           | postgres -> order                          |                                          |                                |
+|                                   |           | order -> kafka                             |                                          |                                |
+|                                   |           | kafka -> shipping                          |                                          |                                |
+|                                   |           | kafka -> invoicing                         |                                          |                                |
+|                                   |           | apache -> order                            |                                          |                                |
+|                                   |           | apache -> invoicing                        |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | apache -> invoicing                        | ['restful_http']                         |                                |
+|                                   | fails     | apache -> order                            | ['restful_http']                         |                                |
+|                                   | fails     | apache -> shipping                         | ['restful_http']                         |                                |
+|                                   | fails     | kafka -> invoicing                         | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | fails     | kafka -> shipping                          | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_consumer_kafka']                |                                |
+|                                   | fails     | order -> kafka                             | ['restful_http',                         |                                |
+|                                   |           |                                            | 'message_producer_kafka']                |                                |
+|                                   | fails     | postgres -> invoicing                      | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | fails     | postgres -> order                          | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | fails     | postgres -> shipping                       | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | fails     | zookeeper -> kafka                         | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

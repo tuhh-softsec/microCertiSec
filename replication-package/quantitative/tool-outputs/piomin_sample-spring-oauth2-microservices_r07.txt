@@ -1,0 +1,52 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("internal").receiver_is("internal").all_are("authenticated")                                                                                        |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("internal")        | included  | customer_service -> account_service        | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'feign_connection',                      |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | account_service -> discovery_server        | ['restful_http']                         |                                |
+|                                   | excluded  | customer_service -> discovery_server       | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("internal")          | included  | customer_service -> account_service        | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'feign_connection',                      |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | included  | account_service -> discovery_server        | ['restful_http']                         |                                |
+|                                   | included  | customer_service -> discovery_server       | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> gateway_server                     | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | excluded  | gateway_server -> account_service          | ['restful_http']                         |                                |
+|                                   | excluded  | auth_server -> account_service             | ['restful_http', 'auth_provider']        |                                |
+|                                   | excluded  | database_gateway_server -> gateway_server  | ['jdbc', 'plaintext_credentials_link']   |                                |
+|                                   | excluded  | auth_server -> customer_service            | ['restful_http', 'auth_provider']        |                                |
+|                                   | excluded  | discovery_server -> gateway_server         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | excluded  | auth_server -> discovery_server            | ['restful_http']                         |                                |
+|                                   | excluded  | gateway_server -> auth_server              | ['restful_http', 'auth_provider',        |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | excluded  | database_auth_server -> auth_server        | ['jdbc', 'plaintext_credentials_link']   |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | customer_service -> account_service        |                                          |                                |
+|                                   |           | account_service -> discovery_server        |                                          |                                |
+|                                   |           | customer_service -> discovery_server       |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("authenticated")       | fails     | customer_service -> account_service        | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'feign_connection',                      |                                |
+|                                   |           |                                            | 'load_balanced_link']                    |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

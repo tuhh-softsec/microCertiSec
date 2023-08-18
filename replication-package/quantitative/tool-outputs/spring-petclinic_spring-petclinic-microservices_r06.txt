@@ -1,0 +1,66 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("internal").receiver_is("internal").all_are("authorized")                                                                                           |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | vets_service -> tracing_server             | ['restful_http']                         |                                |
+|                                   | excluded  | visits_service -> discovery_server         | ['restful_http']                         |                                |
+|                                   | excluded  | customers_service -> prometheus_server     | ['restful_http']                         |                                |
+|                                   | excluded  | visits_service -> prometheus_server        | ['restful_http']                         |                                |
+|                                   | excluded  | vets_service -> discovery_server           | ['restful_http']                         |                                |
+|                                   | excluded  | vets_service -> prometheus_server          | ['restful_http']                         |                                |
+|                                   | excluded  | customers_service -> discovery_server      | ['restful_http']                         |                                |
+|                                   | excluded  | visits_service -> tracing_server           | ['restful_http']                         |                                |
+|                                   | excluded  | customers_service -> tracing_server        | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("internal")          | included  | vets_service -> tracing_server             | ['restful_http']                         |                                |
+|                                   | included  | visits_service -> discovery_server         | ['restful_http']                         |                                |
+|                                   | included  | customers_service -> prometheus_server     | ['restful_http']                         |                                |
+|                                   | included  | visits_service -> prometheus_server        | ['restful_http']                         |                                |
+|                                   | included  | vets_service -> discovery_server           | ['restful_http']                         |                                |
+|                                   | included  | vets_service -> prometheus_server          | ['restful_http']                         |                                |
+|                                   | included  | customers_service -> discovery_server      | ['restful_http']                         |                                |
+|                                   | included  | visits_service -> tracing_server           | ['restful_http']                         |                                |
+|                                   | included  | customers_service -> tracing_server        | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | config_server -> vets_service              | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> customers_service         | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> tracing_server            | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> tracing_server              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | excluded  | config_server -> visits_service            | ['restful_http']                         |                                |
+|                                   | excluded  | tracing_server -> discovery_server         | ['restful_http']                         |                                |
+|                                   | excluded  | github_repository -> config_server         | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> discovery_server          | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> vets_service                | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | excluded  | api_gateway -> prometheus_server           | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | excluded  | prometheus_server -> grafana_server        | ['restful_http']                         |                                |
+|                                   | excluded  | user -> api_gateway                        | ['restful_http']                         |                                |
+|                                   | excluded  | admin_server -> discovery_server           | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> api_gateway               | ['restful_http']                         |                                |
+|                                   | excluded  | config_server -> admin_server              | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> visits_service              | ['restful_http', 'load_balanced_link']   |                                |
+|                                   | excluded  | discovery_server -> api_gateway            | ['restful_http']                         |                                |
+|                                   | excluded  | api_gateway -> customers_service           | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | vets_service -> tracing_server             |                                          |                                |
+|                                   |           | visits_service -> discovery_server         |                                          |                                |
+|                                   |           | customers_service -> prometheus_server     |                                          |                                |
+|                                   |           | visits_service -> prometheus_server        |                                          |                                |
+|                                   |           | vets_service -> discovery_server           |                                          |                                |
+|                                   |           | vets_service -> prometheus_server          |                                          |                                |
+|                                   |           | customers_service -> discovery_server      |                                          |                                |
+|                                   |           | visits_service -> tracing_server           |                                          |                                |
+|                                   |           | customers_service -> tracing_server        |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

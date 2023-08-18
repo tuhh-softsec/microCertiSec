@@ -1,0 +1,48 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("internal").that_have("local_logging").all_are_connected_to(message_broker)                                                     |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | service_b           | ['internal', 'csrf_disabled', 'service'] |                                |
+|                                     | excluded  | service_a           | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| 2. that_are("internal")             | included  | service_b           | ['internal', 'csrf_disabled', 'service'] |                                |
+|                                     | included  | service_a           | ['internal', 'circuit_breaker',          |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | config_server       | ['configuration_server',                 |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | eureka_server       | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | excluded  | admin_dashboard     | ['administration_server',                |                                |
+|                                     |           |                     | 'infrastructural', 'csrf_disabled',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | hystrix_dashboard   | ['monitoring_dashboard',                 |                                |
+|                                     |           |                     | 'monitoring_server', 'infrastructural',  |                                |
+|                                     |           |                     | 'csrf_disabled', 'service']              |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | zipkin              | ['tracing_server', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | zuul                | ['gateway', 'infrastructural',           |                                |
+|                                     |           |                     | 'load_balancer', 'circuit_breaker',      |                                |
+|                                     |           |                     | 'csrf_disabled', 'entrypoint',           |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | rabbitmq            | ['message_broker', 'infrastructural',    |                                |
+|                                     |           |                     | 'service']                               |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| Final scope                         |           | service_b           |                                          |                                |
+|                                     |           | service_a           |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | False     |                     | Property check requires all to have it,  |                                |
+|                                     |           |                     | only x has it                            |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

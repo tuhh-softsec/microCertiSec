@@ -1,0 +1,31 @@
+
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                        |
+|    nodes.that_are("authentication_server").none_are("['administration_server', 'configuration_server', 'gateway', 'message_broker', 'service_discovery', 'search_engine', 'web_application', 'web_server', 'authorization_server', 'logging_server', 'metrics_server', 'monitoring_dashboard', 'monitoring_server', 'tracing_server']")|
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| Step                                | Decision  | Node / Edge         | Stereotypes                              | Traceability                   |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###       |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | excluded  | zuul                | ['gateway', 'load_balancer',             |                                |
+|                                     |           |                     | 'circuit_breaker', 'infrastructural',    |                                |
+|                                     |           |                     | 'entrypoint', 'service']                 |                                |
+|                                     | excluded  | eureka              | ['service_discovery', 'infrastructural', |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | order               | ['internal', 'load_balancer',            |                                |
+|                                     |           |                     | 'circuit_breaker', 'local_logging',      |                                |
+|                                     |           |                     | 'service']                               |                                |
+|                                     | excluded  | catalog             | ['internal', 'service']                  |                                |
+|                                     | excluded  | customer            | ['internal', 'service']                  |                                |
+|                                     | excluded  | user                | ['user_stereotype', 'external_entity']   |                                |
+|                                     | excluded  | turbine             | ['monitoring_server',                    |                                |
+|                                     |           |                     | 'monitoring_dashboard',                  |                                |
+|                                     |           |                     | 'infrastructural', 'service']            |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###             |           |                     |                                          |                                |
+| ----------------------------------- | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                                     | --------- | ------------------- | ---------------------------------------- | ------------------------------ |
+|                            Verdict  | True      |                     | Property check is fulfilled              |                                |
++-------------------------------------+-----------+---------------------+------------------------------------------+--------------------------------+

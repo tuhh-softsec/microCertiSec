@@ -1,0 +1,218 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("service").receiver_is("service").all_are("encrypted")                                                                                              |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 1. receiver_is("service")         | included  | configserver -> comments_webservice        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | comments_webservice -> webservice_registry | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> task_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> task_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> web_portal              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> comments_webservice     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> webservice_registry        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> api_gateway                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> zipkin_tracing             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | webservice_registry -> api_gateway         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> auth_server                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> zipkin_tracing              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | mysqldb -> auth_server                     | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link']            |                                |
+|                                   | included  | auth_server -> api_gateway                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> webservice_registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> user_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | web_portal -> webservice_registry          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> task_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> web_portal                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | user_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> user_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | user_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> user_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | comments_webservice -> zipkin_tracing      | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("service")           | included  | configserver -> comments_webservice        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | comments_webservice -> webservice_registry | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> task_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> task_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> web_portal              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | task_webservice -> comments_webservice     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> webservice_registry        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> api_gateway                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> zipkin_tracing             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | webservice_registry -> api_gateway         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> auth_server                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> zipkin_tracing              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | mysqldb -> auth_server                     | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link']            |                                |
+|                                   | included  | auth_server -> api_gateway                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> webservice_registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> user_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | web_portal -> webservice_registry          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | api_gateway -> task_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> web_portal                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | user_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | configserver -> user_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | user_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | auth_server -> user_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | included  | comments_webservice -> zipkin_tracing      | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | user -> api_gateway                        | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+|                                   | excluded  | github_repository -> configserver          | ['restful_http']                         |                                |
+|                                   | excluded  | user -> auth_server                        | ['restful_http',                         |                                |
+|                                   |           |                                            | 'authenticated_request',                 |                                |
+|                                   |           |                                            | 'authenticated', 'authorized']           |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | configserver -> comments_webservice        |                                          |                                |
+|                                   |           | comments_webservice -> webservice_registry |                                          |                                |
+|                                   |           | task_webservice -> zipkin_tracing          |                                          |                                |
+|                                   |           | configserver -> task_webservice            |                                          |                                |
+|                                   |           | auth_server -> task_webservice             |                                          |                                |
+|                                   |           | task_webservice -> webservice_registry     |                                          |                                |
+|                                   |           | task_webservice -> web_portal              |                                          |                                |
+|                                   |           | task_webservice -> comments_webservice     |                                          |                                |
+|                                   |           | configserver -> webservice_registry        |                                          |                                |
+|                                   |           | configserver -> api_gateway                |                                          |                                |
+|                                   |           | configserver -> zipkin_tracing             |                                          |                                |
+|                                   |           | webservice_registry -> api_gateway         |                                          |                                |
+|                                   |           | configserver -> auth_server                |                                          |                                |
+|                                   |           | api_gateway -> zipkin_tracing              |                                          |                                |
+|                                   |           | mysqldb -> auth_server                     |                                          |                                |
+|                                   |           | auth_server -> api_gateway                 |                                          |                                |
+|                                   |           | auth_server -> webservice_registry         |                                          |                                |
+|                                   |           | api_gateway -> user_webservice             |                                          |                                |
+|                                   |           | web_portal -> webservice_registry          |                                          |                                |
+|                                   |           | api_gateway -> task_webservice             |                                          |                                |
+|                                   |           | configserver -> web_portal                 |                                          |                                |
+|                                   |           | user_webservice -> zipkin_tracing          |                                          |                                |
+|                                   |           | configserver -> user_webservice            |                                          |                                |
+|                                   |           | user_webservice -> webservice_registry     |                                          |                                |
+|                                   |           | auth_server -> user_webservice             |                                          |                                |
+|                                   |           | comments_webservice -> zipkin_tracing      |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 3. all_are("encrypted")           | fails     | api_gateway -> task_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | api_gateway -> user_webservice             | ['restful_http', 'load_balanced_link',   |                                |
+|                                   |           |                                            | 'circuit_breaker_link', 'authenticated', |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | api_gateway -> zipkin_tracing              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_server -> api_gateway                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_server -> task_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_server -> user_webservice             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | auth_server -> webservice_registry         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | comments_webservice -> webservice_registry | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | comments_webservice -> zipkin_tracing      | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> api_gateway                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> auth_server                | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> comments_webservice        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> task_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> user_webservice            | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> web_portal                 | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> webservice_registry        | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | configserver -> zipkin_tracing             | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | mysqldb -> auth_server                     | ['restful_http',                         |                                |
+|                                   |           |                                            | 'plaintext_credentials_link']            |                                |
+|                                   | fails     | task_webservice -> comments_webservice     | ['restful_http', 'circuit_breaker_link', |                                |
+|                                   |           |                                            | 'load_balanced_link', 'authenticated',   |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | task_webservice -> web_portal              | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | task_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | task_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | user_webservice -> webservice_registry     | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | user_webservice -> zipkin_tracing          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | web_portal -> webservice_registry          | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | fails     | webservice_registry -> api_gateway         | ['restful_http', 'authenticated',        |                                |
+|                                   |           |                                            | 'authorized']                            |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+

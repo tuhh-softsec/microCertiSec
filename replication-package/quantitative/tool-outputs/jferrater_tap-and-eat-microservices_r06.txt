@@ -1,0 +1,51 @@
+
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Statement:                                                                                                                                                             |
+|    edges.sender_is("internal").receiver_is("internal").all_are("authorized")                                                                                           |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| Step                              | Decision  | Node / Edge                                | Stereotypes                              | Traceability                   |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
+| ### Scope transformations ###     |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | price_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | excluded  | customer_service -> discovery_service      | ['restful_http']                         |                                |
+|                                   | excluded  | account_service -> discovery_service       | ['restful_http']                         |                                |
+|                                   | excluded  | item_service -> discovery_service          | ['restful_http']                         |                                |
+|                                   | excluded  | store_service -> discovery_service         | ['restful_http']                         |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| 2. sender_is("internal")          | included  | price_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | included  | customer_service -> discovery_service      | ['restful_http']                         |                                |
+|                                   | included  | account_service -> discovery_service       | ['restful_http']                         |                                |
+|                                   | included  | item_service -> discovery_service          | ['restful_http']                         |                                |
+|                                   | included  | store_service -> discovery_service         | ['restful_http']                         |                                |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | excluded  | config_service -> discovery_service        | ['restful_http']                         |                                |
+|                                   | excluded  | config_service -> item_service             | ['restful_http']                         |                                |
+|                                   | excluded  | github_repository -> config_service        | ['restful_http']                         |                                |
+|                                   | excluded  | config_service -> customer_service         | ['restful_http']                         |                                |
+|                                   | excluded  | config_service -> foodtray_service         | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | excluded  | foodtray_service -> discovery_service      | ['restful_http', 'circuit_breaker_link'] |                                |
+|                                   | excluded  | config_service -> store_service            | ['restful_http']                         |                                |
+|                                   | excluded  | user -> foodtray_service                   | ['restful_http']                         |                                |
+|                                   | excluded  | config_service -> price_service            | ['restful_http']                         |                                |
+|                                   | excluded  | foodtray_service -> item_service           | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+|                                   | excluded  | config_service -> account_service          | ['restful_http']                         |                                |
+|                                   | excluded  | foodtray_service -> price_service          | ['restful_http', 'feign_connection',     |                                |
+|                                   |           |                                            | 'load_balanced_link',                    |                                |
+|                                   |           |                                            | 'circuit_breaker_link']                  |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| Final scope                       |           | price_service -> discovery_service         |                                          |                                |
+|                                   |           | customer_service -> discovery_service      |                                          |                                |
+|                                   |           | account_service -> discovery_service       |                                          |                                |
+|                                   |           | item_service -> discovery_service          |                                          |                                |
+|                                   |           | store_service -> discovery_service         |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+| ### Property checks ###           |           |                                            |                                          |                                |
+| --------------------------------- | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                                   | --------- | ------------------------------------------ | ---------------------------------------- | ------------------------------ |
+|                          Verdict  | False     |                                            | Property check requires all to have it,  |                                |
+|                                   |           |                                            | only x has it                            |                                |
++-----------------------------------+-----------+--------------------------------------------+------------------------------------------+--------------------------------+
