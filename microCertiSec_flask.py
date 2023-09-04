@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 import json
 
-from rule_checker_api import rule_checker_api
+from microCertiSec import microCertiSec_API
 
 app = Flask(__name__, instance_relative_config = True)
 
@@ -12,8 +12,8 @@ def index():
     return "API for automatic rule checking of architectural models."
 
 
-# Create endpoint /rule_checker
-@app.get('/rule_checker')
+# Create endpoint /microCertiSec
+@app.get('/microCertiSec')
 def rule_checker():
 
     model_path = request.args.get("model_path")
@@ -22,14 +22,14 @@ def rule_checker():
     # optional argument for parser!
 
     if not model_path:
-        return "Please specify a path to the model file, e.g. /rule_checker?model_path=path/to/model"
+        return "Please specify a path to the model file, e.g. /microCertiSec?model_path=path/to/model"
     if not traceability_path:
-        return "Please specify a path to the traceability file, e.g. /rule_checker?traceability_path=path/to/traceability"
+        return "Please specify a path to the traceability file, e.g. /microCertiSec?traceability_path=path/to/traceability"
     if not rule:
         return "Please specify a rule. Either the ID of pre-formulated rule preceeded by an underscore (e.g., \"_r01\"), or a custom query"
 
-    # Call rule_checker
-    results = rule_checker_api(model_path, traceability_path, rule)
+    # Call microCertiSec
+    results = microCertiSec_API(model_path, traceability_path, rule)
 
     # Create response JSON object and return it
     response = jsonify(
