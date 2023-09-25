@@ -6,11 +6,8 @@ from library_of_rules.rule_library import r01, r02, r03, r04, r05, r06, r07, r08
 from datetime import datetime
 
 
-#dfd_path = "./dfds/sqshq_piggymetrics.json"
-#traceability_path = "./dfds/anilallewar_microservices-basics-spring-boot_traceability.json"
-
-dfd_path = "./delta_evaluation/piggy_metrics_delta.py"
-traceability_path = "./delta_evaluation/piggymetrics.trace.json"
+dfd_path = "./dfds/sqshq_piggymetrics.json"
+traceability_path = "./dfds/sqshq_piggymetrics_traceability.json"
 
 
 def main():
@@ -18,9 +15,10 @@ def main():
     start_time = datetime.now()
     print(dfd_path)
 
-    model = load_model(dfd_path, traceability_path, "VIENNA")
+    model = load_model(dfd_path, traceability_path, "TUHH")
 
-    result = model.edges.receiver_is("external_component").all_have("https").AND(model.edges.sender_is("external_component").all_have("https"))
+    #result = model.edges.receiver_is("external_component").all_have("https").AND(model.edges.sender_is("external_component").all_have("https"))
+    result = rules.r03(model)
 
     with open("./delta_evaluation/output_delta.json", "w") as output_file:
         json.dump(result.full_evidence_json, output_file, indent = 4)

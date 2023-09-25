@@ -282,7 +282,7 @@ class CResults():
 
         property_check_evidence = self.property_check_evidence
         columnwidths = self.columnwidths
-
+        columnwidths[3] = 48
         # Initialize PrettyTables object
         pt = PrettyTable()
         pt.field_names = ["Step", "Decision", "Node / Edge", "Properties"]
@@ -300,6 +300,7 @@ class CResults():
         output_string += "|    " + self.query + " " * (total_width + 7 - len(self.query)) + "|\n"
 
         output_html += pt.get_string()
+        print(output_html)
         # Scope transformation section header
         if scoping_evidences:
             pt.add_row(["### Scope transformations ###", "", "", ""])
