@@ -285,8 +285,8 @@ class CNodes:
 
         property_check_evidence = {"property_check": f"{property_check}(\"{str(stereotype)}\")",
                                     "verdict": False,
-                                    "fulfilled": set(),
-                                    "violated": set()}
+                                    "fulfilled": list(),
+                                    "violated": list()}
 
         if isinstance(stereotype, str):
             stereotypes = list()
@@ -303,9 +303,9 @@ class CNodes:
                 for connected_node in node.connected_nodes:
                     for stereotype in stereotypes:
                         if stereotype in [stereotype for (stereotype, traceability) in connected_node.stereotypes]:
-                            property_check_evidence["fulfilled"].add((node.name, str(node.stereotypes), node.traceability))
+                            property_check_evidence["fulfilled"].append((node.name, node.stereotypes, node.traceability))
                         else:
-                            property_check_evidence["violated"].add((node.name, str(node.stereotypes), node.traceability))
+                            property_check_evidence["violated"].append((node.name, node.stereotypes, node.traceability))
 
             property_check_evidence["fulfilled"] = list(property_check_evidence["fulfilled"])
             property_check_evidence["violated"] = list(property_check_evidence["violated"])
@@ -324,8 +324,8 @@ class CNodes:
 
         property_check_evidence = {"property_check": f"{property_check}(\"{str(stereotype)}\")",
                                     "verdict": False,
-                                    "fulfilled": set(),
-                                    "violated": set()}
+                                    "fulfilled": list(),
+                                    "violated": list()}
 
         if isinstance(stereotype, str):
             stereotypes = list()
@@ -337,9 +337,9 @@ class CNodes:
             for connected_node in node.connected_nodes:
                 for stereotype in stereotypes:
                     if stereotype in [stereotype for (stereotype, traceability) in connected_node.stereotypes]:
-                        property_check_evidence["fulfilled"].add((node.name, str(node.stereotypes), node.traceability))
+                        property_check_evidence["fulfilled"].append((node.name, node.stereotypes, node.traceability))
                     else:
-                        property_check_evidence["violated"].add((node.name, str(node.stereotypes), node.traceability))
+                        property_check_evidence["violated"].append((node.name, node.stereotypes, node.traceability))
 
         property_check_evidence["fulfilled"] = list(property_check_evidence["fulfilled"])
         property_check_evidence["violated"] = list(property_check_evidence["violated"])
