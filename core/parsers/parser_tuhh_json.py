@@ -45,7 +45,7 @@ def parser(dfd_path: str, traceability_path: str) -> CModel:
         tagged_values = information_flow["tagged_values"]
         for t in tagged_values:
             if t == "Protocol" and tagged_values[t] == "HTTPS":
-                stereotypes.append("encrypted")
+                stereotypes.append(("encrypted", "traceability"))
         flow_traceability = "traceability"
 
         for node in nodes:
