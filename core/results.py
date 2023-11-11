@@ -300,7 +300,7 @@ class CResults():
         output_string += "|    " + self.query + " " * (total_width + 7 - len(self.query)) + "|\n"
 
         output_html += pt.get_string()
-        print(output_html)
+        
         # Scope transformation section header
         if scoping_evidences:
             pt.add_row(["### Scope transformations ###", "", "", ""])

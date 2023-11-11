@@ -6,27 +6,40 @@ from library_of_rules.rule_library import r01, r02, r03, r04, r05, r06, r07, r08
 from datetime import datetime
 
 
-dfd_path = "./dfds/sqshq_piggymetrics.json"
-traceability_path = "./dfds/sqshq_piggymetrics_traceability.json"
-
-
 def main():
+    # dfd_path = "./dfds/anilallewar_microservices-basics-spring-boot.json"
+    # dfd_path = "./dfds/apssouza22_java-microservice.json"
+    # dfd_path = "./dfds/callistaenterprise_blog-microservices.json"
+    # dfd_path = "./dfds/ewolff_microservice-kafka.json"
+    # dfd_path = "./dfds/ewolff_microservice.json"
+    # dfd_path = "./dfds/fernandoabcampos_spring-netflix-oss-microservices.json"
+    # dfd_path = "./dfds/georgwittberger_apache-spring-boot-microservice-example.json"
+    # dfd_path = "./dfds/jferrater_tap-and-eat-microservices.json"
+    # dfd_path = "./dfds/koushikkothagal_spring-boot-microservices-workshop.json"
+    # dfd_path = "./dfds/mdeket_spring-cloud-movie-recommendation.json"
+    # dfd_path = "./dfds/mudigal-technologies_microservices-sample.json"
+    # dfd_path = "./dfds/piomin_sample-spring-oauth2-microservices.json"
+    # dfd_path = "./dfds/rohitghatol_spring-boot-microservices.json"
+    # dfd_path = "./dfds/shabbirdwd53_springboot-microservice.json"
+    # dfd_path = "./dfds/spring-petclinic_spring-petclinic-microservices.json"
+    # dfd_path = "./dfds/sqshq_piggymetrics.json"
+    dfd_path = "./dfds/yidongnan_spring-cloud-netflix-example.json"
 
     start_time = datetime.now()
-    print(dfd_path)
-
+    traceability_path = dfd_path.replace(".json", "") + "_traceability.json"
     model = load_model(dfd_path, traceability_path, "TUHH")
 
-    #result = model.edges.receiver_is("external_component").all_have("https").AND(model.edges.sender_is("external_component").all_have("https"))
-    result = rules.r03(model)
+    result = rules.r01(model)
+    with open("./output/output24.txt", "w") as output_file:
+        output_file.write(result.full_evidence_string)
 
-    with open("./delta_evaluation/output_delta.json", "w") as output_file:
-        json.dump(result.full_evidence_json, output_file, indent = 4)
 
+    print(result.full_evidence_string)
+    
     end_time = datetime.now()
     execution_time = (end_time - start_time).total_seconds()
     print("Execution time: ", execution_time)
-    print(result.full_evidence_string)
+
     return
 
 
