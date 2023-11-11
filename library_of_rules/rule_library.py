@@ -22,16 +22,13 @@ def rule_set(model):
     """
 
     results = dict()
-    # for rule in [r01, r02, r03, r04, r05,
-    #             r06, r07, r08, r09, r10,
-    #             r11, r12, r13, r14, r15,
-    #             r16, r17, r18, r19, r20,
-    #             r21, r22, r23, r24, r25]:
-    #     results[rule.__name__] = rule(model)
-
-
-    for rule in [r04, r06, r13, r03, r24]:
+    for rule in [r01, r02, r03, r04, r05,
+                r06, r07, r08, r09, r10,
+                r11, r12, r13, r14, r15,
+                r16, r17, r18, r19, r20,
+                r21, r22, r23, r24, r25]:
         results[rule.__name__] = rule(model)
+
     return results
 
 
