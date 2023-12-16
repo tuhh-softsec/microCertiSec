@@ -1,8 +1,11 @@
+"""Augments the output file with traceability information taken from the provided traceability file.
+"""
+
 import json
 
 
 def main():
-    # creating clickable links in HTML file (very hacky)
+    # creating clickable links in HTML file (hacky)
     with open("./dfds/sqshq_piggymetrics_traceability.json", "r") as traceability_file:
         traceability = json.load(traceability_file)
 
@@ -58,16 +61,7 @@ def main():
                             trace = traceability["edges"][e]["sub_items"][s]["file"]
                             if "http" in trace:
                                 line = line.replace(s, f"<a href=\"{trace}\" target=\"_blank\">{s}</a>")
-
-        # stereotypes traceability
-        # for n in traceability["nodes"]:
-        #     if (node == n) or (node.replace("_", "-") == n):
-        #         trace = traceability["nodes"][n]["file"]
-        #         if "http" in trace:
-        #             line = line.replace(node, f"<a href=\"{trace}\" target=\"_blank\">{node}</a>")
-        #             new_results_string += line + "\n"
-        #             added = True
-
+                                
         new_results_string += line + "\n"
 
     new_results_string += "</pre>\

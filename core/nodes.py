@@ -72,23 +72,6 @@ class CNodes:
         return self.that_are(stereotype, "that_have")
 
 
-    # def select_by_name(self, names, transformation = "select_by_name"):
-    #     """Returns nodes with the passed names.
-    #     """
-
-    #     query = self.query + f".{transformation}(\"{str(names)}\")"
-
-    #     scoping_evidence = self.scoping_evidence
-
-    #     new_scoping_evidence = {"scope_transformation": f"{transformation}(\"{str(names)}\")",
-    #                         "input_scope": str(names),
-    #                         "included": [(node.name, node.stereotypes, node.traceability) for node in included_nodes],
-    #                         "excluded": [(node.name, node.stereotypes, node.traceability) for node in excluded_nodes]}
-
-    #     scoping_evidence.append(new_scoping_evidence)
-    #     return CNodes(included_nodes, query, scoping_evidence)
-
-
     def that_are_connected_to(self, nodes, transformation = "that_are_connected_to"):
         """Alias for that_are_connected_to_any_of().
         """

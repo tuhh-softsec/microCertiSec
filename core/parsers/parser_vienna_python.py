@@ -79,9 +79,6 @@ def parser(dfd_path: str, traceability_path: str) -> CModel:
                         found = True
                     count += 1
             add_edge(complete_line)
-
-
-
     return CModel("first_evaluation_model", CNodes(nodes), CEdges(edges))
 
 

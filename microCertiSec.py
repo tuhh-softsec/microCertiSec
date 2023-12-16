@@ -1,13 +1,14 @@
-import json
+import os
+from datetime import datetime
 
 from core.load_model import load_model
 import library_of_rules.rule_library as rules
 from library_of_rules.rule_library import r01, r02, r03, r04, r05, r06, r07, r08, r09, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26
-from datetime import datetime
+
 
 
 def main():
-    # dfd_path = "./models/anilallewar_microservices-basics-spring-boot.json"
+    dfd_path = "./models/anilallewar_microservices-basics-spring-boot.json"
     # dfd_path = "./models/apssouza22_java-microservice.json"
     # dfd_path = "./models/callistaenterprise_blog-microservices.json"
     # dfd_path = "./models/ewolff_microservice-kafka.json"
@@ -23,14 +24,17 @@ def main():
     # dfd_path = "./models/shabbirdwd53_springboot-microservice.json"
     # dfd_path = "./models/spring-petclinic_spring-petclinic-microservices.json"
     # dfd_path = "./models/sqshq_piggymetrics.json"
-    dfd_path = "./models/yidongnan_spring-cloud-netflix-example.json"
+    # dfd_path = "./models/yidongnan_spring-cloud-netflix-example.json"
 
     start_time = datetime.now()
     traceability_path = dfd_path.replace(".json", "") + "_traceability.json"
     model = load_model(dfd_path, traceability_path, "TUHH")
 
+    os.makedirs(os.path.dirname("./output"), exist_ok=True)
+
+    name = dfd_path.split("models/")[1]
     result = rules.r01(model)
-    with open("./output/output24.txt", "w") as output_file:
+    with open(f"./output/{name}.txt", "w") as output_file:
         output_file.write(result.full_evidence_string)
 
 

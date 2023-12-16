@@ -1,7 +1,6 @@
 from core.results import CResults
 
 
-
 class CEdges:
     def __init__(self, edges, query = str(), scoping_evidence = list(), property_check_evidence = str()):
         self.edges = edges
@@ -114,7 +113,7 @@ class CEdges:
         return CEdges([edge for edge in self.edges if stereotype in [stereotype for (stereotype, traceability) in edge.receiver.stereotypes]], query, scoping_evidence)
 
 
-    def receiver_has(self, sterotype):
+    def receiver_has(self, stereotype):
         """Alias to receiver_is().
         """
 
@@ -272,10 +271,3 @@ class CEdges:
         """
 
         return self.none_are_any_of(stereotype, "none_have")
-
-
-    def length(self):
-        len = 0
-        for node in self.edges:
-            len += 1
-        return len

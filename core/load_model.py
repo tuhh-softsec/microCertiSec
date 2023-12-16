@@ -13,9 +13,6 @@ nodes, edges = set(), set()
 traceability = dict()
 
 
-# TODO model transformations for authentication: if node has authentication_scope_all_requests, give stereotype authenticated_request to all incoming flows
-
-
 def load_model(dfd_path: str, traceability_path: str = None, parser: str = "TUHH"):
     """Loads CodeableModels file and instantiates Node and Edge objects for each item.
     """
@@ -66,8 +63,6 @@ def load_model(dfd_path: str, traceability_path: str = None, parser: str = "TUHH
 
             add_edge(complete_line)
 
-    #for node in nodes:
-    #    print(node)
     nodes = CNodes(nodes)
     edges = CEdges(edges)
 
@@ -91,7 +86,6 @@ def set_edges(nodes, edges):
 
 
 def parser_vienna():
-    # TODO
     pass
 
 

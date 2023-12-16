@@ -1,4 +1,3 @@
-import ast
 
 functionality_stereotypes = ["administration_server",
                             "configuration_server",

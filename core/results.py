@@ -1,5 +1,4 @@
 from prettytable import PrettyTable
-import json
 
 
 class CResults():
@@ -55,7 +54,7 @@ class CResults():
                                     "second_operand": second_operand.property_check_evidence}
 
         ### JSON
-        #quick fix to remove duplicates from second operand which I can't get out otherwise
+        #fix to remove duplicates from second operand which I can't get out otherwise
         for k, v in first_operand.scoping_evidence_json.items():
             del second_operand.scoping_evidence_json[k]
 
@@ -70,19 +69,6 @@ class CResults():
                                 "verdict": verdict,
                                 "statements": {"first_operand": first_operand.full_evidence_json,
                                                 "second_operand": second_operand.full_evidence_json}}
-        # full_evidence_json["statements"][first_operand.query] = dict()
-        # full_evidence_json["statements"][first_operand.query]["scope_transformations"] = dict()
-
-        # for id, transformation in enumerate(first_operand.scoping_evidence):
-        #     full_evidence_json["statements"][first_operand.query]["scope_transformations"][transformation["scope_transformation"]] = dict()
-        #     included_items = list()
-        #     for i in transformation["included"]:
-        #         included_items.append({i[0]: {"stereotypes": i[1]}})
-        #     full_evidence_json["statements"][first_operand.query]["scope_transformations"][transformation["scope_transformation"]]["included"] = included_items
-        #     excluded_items = list()
-        #     full_evidence_json["statements"][first_operand.query]["scope_transformations"][transformation["scope_transformation"]]["excluded"] = excluded_items
-        # full_evidence_json["statements"][first_operand.query]["property_check"] = dict()
-
 
         ### String
         scoping_evidence_string = first_operand.scoping_evidence_string + "\n" + second_operand.scoping_evidence_string
@@ -152,8 +138,8 @@ class CResults():
 
         pt = self.prettify_scoping_evidence(scoping_evidences, pt)
 
-
         return pt.get_string()
+
 
     def generate_scoping_evidence_json(self) -> dict:
         scoping_evidence_json = dict()
@@ -310,11 +296,7 @@ class CResults():
             pt = self.prettify_scoping_evidence(scoping_evidences, pt)
 
         # Property checks section header
-        #pt.add_row(["-" * self.columnwidths[0], "-" * self.columnwidths[1], "-" * self.columnwidths[2], "-" * self.columnwidths[3], "-" * self.columnwidths[4]])
-        #pt.add_row(["#" * self.columnwidths[0], "#" * self.columnwidths[1], "#" * self.columnwidths[2], "#" * self.columnwidths[3], "#" * self.columnwidths[4]])
             pt.add_row(["-" * self.columnwidths[0], "-" * self.columnwidths[1], "-" * self.columnwidths[2], "-" * self.columnwidths[3]])
-        #pt.add_row(["Property checks", "#" * self.columnwidths[1], "#" * self.columnwidths[2], "#" * self.columnwidths[3], "#" * self.columnwidths[4]])
-        #pt.add_row(["-" * self.columnwidths[0], "-" * self.columnwidths[1], "-" * self.columnwidths[2], "-" * self.columnwidths[3], "-" * self.columnwidths[4]])
         pt.add_row(["### Property checks ###", "", "", ""])
         pt.add_row(["-" * self.columnwidths[0], "-" * self.columnwidths[1], "-" * self.columnwidths[2], "-" * self.columnwidths[3]])
 
@@ -344,13 +326,6 @@ class CResults():
 
         if not scoping_evidences:
             return pt
-        # Add initial scope
-        # for id, node in enumerate(scoping_evidences[0]["input_scope"].split(",")):
-        #     if id == 0:
-        #         pt.add_row(["0. Initial scope", "", node.strip(), ""])
-        #     else:
-        #         pt.add_row(["", "", node.strip(), ""])
-        # pt.add_row(["-" * self.columnwidths[0], "-" * self.columnwidths[1], "-" * self.columnwidths[2], "-" * self.columnwidths[3]])
 
         # Add scope transformations
         for id, scoping_evidence in enumerate(scoping_evidences):
