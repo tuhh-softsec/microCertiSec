@@ -6,7 +6,7 @@ They are initially based on best-practices and guidelines for the secure archite
 The rules expressed in our rule specification language are contained in ```/rule_library.py```. 
 Please check the description and minimal example shown in the repository's main [README](www.github.com/tuhh-softsec/microcertisec/README.md).
 
-The library consists of the following 25 rules (shown here in natural language):
+The library consists of the following 25 rules, which are shown here in natural language and contained as queries in our rule specification language in ```/rule_library.py```:
 | ID | Rule |
 | ----- | ----- |
 | 1 | There should be a single service as entry point. |
