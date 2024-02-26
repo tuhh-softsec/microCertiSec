@@ -18,7 +18,7 @@ No requirements other than Python version 3.x are needed.
 You can also start up a Flask server by executing ```python3 microCertiSec_flask.py```. This will make microCertiSec abailable via API on localhost port 5001. 
 In this case, you need to install a [recent version of Flask](https://pypi.org/project/Flask/).
 
-Requests to the endpoint `microCertiSec` require three parameters: `model_path` giving the relative path to the [architectural model](#Used Architectural Models), `traceability_path` giving the relative path to the traceability file, and `rule` giving the architectural to be checked, either as query in our [rule specification language](#Rule Specification Language) or as ID of a rule in our [library of architectural security rules](#Rules for Microservice Applications).
+Requests to the endpoint `microCertiSec` require three parameters: `model_path` giving the relative path to the [architectural model](#Used-Architectural-Models), `traceability_path` giving the relative path to the traceability file, and `rule` giving the architectural to be checked, either as query in our [rule specification language](#Rule-Specification-Language) or as ID of a rule in our [library of architectural security rules](#Rules-for-Microservice-Applications).
 
 
 ### Used Architectural Models
