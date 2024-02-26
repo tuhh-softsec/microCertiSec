@@ -29,7 +29,8 @@ Specifically, ones in the form as created by *[code2DFD](www.github.com/tuhh-sof
 
 ### Rule Specification Language
 The core of our approach is a rule specification language that allows the formulation of architectural security rules.
-Rules that are expressed as queries in the rule sepcification language can be validated on a given model and will return a binary verdict, i.e., whether the rule is adhered to or violated based on the model.
+A short documentation for the language can be found in the [docs](https://github.com/tuhh-softsec/microCertiSec/docs/rule_specification_language.md)
+Rules that are expressed as queries in the rule specification language can be validated on a given model and will return a binary verdict, i.e., whether the rule is adhered to or violated based on the model.
 Additionally, the queries generate step-by-step explanations for the verdict, which makes the decision process of how the verdict is reached comprehensible to human users. 
 Each step is supported by model items that influence it, so that everything can be verified.
 Finally, the models we use contain traceability information, linking model items to artefacts in source code.
