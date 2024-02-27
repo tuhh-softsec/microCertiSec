@@ -17,11 +17,11 @@ The language's grammar is shown below:
 
 
 ```
-<rule> 				::= (<statement>‘.’<logical_operator>)* <statement>
-<statement> 		::= <initial_scope>‘.’(‘<scope_transformation>‘.’)* <property_check>
-<initial_scope> 	::= (<nodes> | <edges>)
-<nodes> 			::= the set of all nodes in the model
-<edges> 			::= the set of all edges in the model
+<rule>             ::= (<statement>‘.’<logical_operator>)* <statement>
+<statement>        ::= <initial_scope>‘.’(‘<scope_transformation>‘.’)* <property_check>
+<initial_scope>    ::= (<nodes> | <edges>)
+<nodes>            ::= the set of all nodes in the model
+<edges>            ::= the set of all edges in the model
 
 // all valid <logical_operator>, <scope_transformation>, and <property_check> are listed in the table below
 ```
