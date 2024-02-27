@@ -41,6 +41,7 @@ In this way, our approach provides explainability for its rule checking results.
 ### Rules for Microservice Applications
 You can formulate your own architectural rules to be checked on the models, but we also provide a library of 25 architectural security rules that microservice applications should follow.
 They are based on best-practice recommendations by OWASP, NIST, and CSA.
+A description of the rules is given in the [docs](https://github.com/tuhh-softsec/microCertiSec/docs/library_of_rules.md)
 Their formulations in our rule specification language can be found in ```/library_of_rules/``` and you can use them to analyze your microservice applications (see the example below for how to do it).
 
 
