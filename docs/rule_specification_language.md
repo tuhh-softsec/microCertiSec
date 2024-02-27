@@ -13,6 +13,17 @@ Queries are concatinations of multiple *constructs* and look for example like th
 
 > `nodes.that_are("entrypoint").all_have("authorization")``
 
+The language's grammar is shown in the figure below:
+
+
+<object data="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf" type="application/pdf" width="700px" height="700px">
+    <embed src="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf">
+        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf">Download PDF</a>.</p>
+    </embed>
+</object>
+
+
+
 There are three groups of constructs, [*scope transformations*](#scope-transformations), [*property checks*](#property-checks), and [*logical operators*](logical-operators), presented in more detail below.
 
 
