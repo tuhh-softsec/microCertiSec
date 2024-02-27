@@ -29,7 +29,7 @@ Specifically, ones in the form as created by *[code2DFD](www.github.com/tuhh-sof
 
 ### Rule Specification Language
 The core of our approach is a rule specification language that allows the formulation of architectural security rules.
-A short documentation for the language can be found in the [docs](https://github.com/tuhh-softsec/microCertiSec/docs/rule_specification_language.md)
+A short documentation for the language can be found in the [docs](https://github.com/tuhh-softsec/microCertiSec/blob/main/docs/rule_specification_language.md)
 Rules that are expressed as queries in the rule specification language can be validated on a given model and will return a binary verdict, i.e., whether the rule is adhered to or violated based on the model.
 Additionally, the queries generate step-by-step explanations for the verdict, which makes the decision process of how the verdict is reached comprehensible to human users. 
 Each step is supported by model items that influence it, so that everything can be verified.
@@ -41,7 +41,7 @@ In this way, our approach provides explainability for its rule checking results.
 ### Rules for Microservice Applications
 You can formulate your own architectural rules to be checked on the models, but we also provide a library of 25 architectural security rules that microservice applications should follow.
 They are based on best-practice recommendations by OWASP, NIST, and CSA.
-A description of the rules is given in the [docs](https://github.com/tuhh-softsec/microCertiSec/docs/library_of_rules.md)
+A description of the rules is given in the [docs](https://github.com/tuhh-softsec/microCertiSec/blob/main/docs/library_of_rules.md)
 Their formulations in our rule specification language can be found in ```/library_of_rules/``` and you can use them to analyze your microservice applications (see the example below for how to do it).
 
 
