@@ -13,14 +13,20 @@ Queries are concatinations of multiple *constructs* and look for example like th
 
 > `nodes.that_are("entrypoint").all_have("authorization")``
 
-The language's grammar is shown in the figure below:
+The language's grammar is shown below:
 
 
-<object data="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf">
-        <p>This browser does not support PDFs. Please download the PDF to view it: <a href="https://github.com/tuhh-softsec/microCertiSec/tree/main/docs/grammar.pdf">Download PDF</a>.</p>
-    </embed>
-</object>
+```
+<rule> 				::= (<statement>‘.’<logical_operator>)* <statement>
+<statement> 		::= <initial_scope>‘.’(‘<scope_transformation>‘.’)* <property_check>
+<initial_scope> 	::= (<nodes> | <edges>)
+<nodes> 			::= the set of all nodes in the model
+<edges> 			::= the set of all edges in the model
+
+// all valid <logical_operator>, <scope_transformation>, and <property_check> are listed in the table below
+```
+
+
 
 
 
