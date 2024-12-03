@@ -6,10 +6,10 @@ import json
 
 def main():
     # creating clickable links in HTML file (hacky)
-    with open("./dfds/sqshq_piggymetrics_traceability.json", "r") as traceability_file:
+    with open("./models/piomin_sample-spring-oauth2-microservices_traceability.json", "r") as traceability_file:
         traceability = json.load(traceability_file)
 
-    with open("./output.txt", "r") as results_file:
+    with open("./output/piomin_sample-spring-oauth2-microservices.json.txt", "r") as results_file:
         result_string = results_file.read()
 
     started = False
@@ -67,7 +67,7 @@ def main():
     new_results_string += "</pre>\
     </body>\
     </html>"
-    with open("./output.html", "w") as output_file:
+    with open("./output/output.html", "w") as output_file:
         output_file.write(new_results_string)
 
 

@@ -293,7 +293,7 @@ class CNodes:
             property_check_evidence["fulfilled"] = list(property_check_evidence["fulfilled"])
             property_check_evidence["violated"] = list(property_check_evidence["violated"])
 
-            if len(property_check_evidence["violated"]) == 0:
+            if len(property_check_evidence["violated"]) == 0:   # TODO
                 property_check_evidence["verdict"] = True
 
         return CResults(query, property_check_evidence["verdict"], self.scoping_evidence, property_check_evidence)

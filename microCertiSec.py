@@ -8,7 +8,7 @@ from library_of_rules.rule_library import r01, r02, r03, r04, r05, r06, r07, r08
 
 
 def main():
-    dfd_path = "./models/anilallewar_microservices-basics-spring-boot.json"
+    # dfd_path = "./models/anilallewar_microservices-basics-spring-boot.json"
     # dfd_path = "./models/apssouza22_java-microservice.json"
     # dfd_path = "./models/callistaenterprise_blog-microservices.json"
     # dfd_path = "./models/ewolff_microservice-kafka.json"
@@ -19,7 +19,7 @@ def main():
     # dfd_path = "./models/koushikkothagal_spring-boot-microservices-workshop.json"
     # dfd_path = "./models/mdeket_spring-cloud-movie-recommendation.json"
     # dfd_path = "./models/mudigal-technologies_microservices-sample.json"
-    # dfd_path = "./models/piomin_sample-spring-oauth2-microservices.json"
+    dfd_path = "./models/piomin_sample-spring-oauth2-microservices.json"
     # dfd_path = "./models/rohitghatol_spring-boot-microservices.json"
     # dfd_path = "./models/shabbirdwd53_springboot-microservice.json"
     # dfd_path = "./models/spring-petclinic_spring-petclinic-microservices.json"
@@ -33,7 +33,7 @@ def main():
     os.makedirs(os.path.dirname("./output"), exist_ok=True)
 
     name = dfd_path.split("models/")[1]
-    result = rules.r01(model)
+    result = rules.r13(model)
     with open(f"./output/{name}.txt", "w") as output_file:
         output_file.write(result.full_evidence_string)
 
