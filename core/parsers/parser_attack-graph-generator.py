@@ -8,7 +8,7 @@ from core.edges import CEdges
 from core.model import CModel
 
 def parser(model_path: str, traceability_path: str) -> CModel:
-    """Parser for architectural representations as created by MicroDepGraph.
+    """Parser for architectural representations as created by Attack Graph Generator.
     Takes paths to input model and traceability file, returns CModels object.
     """
 
