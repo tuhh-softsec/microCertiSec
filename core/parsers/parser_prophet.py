@@ -18,14 +18,18 @@ def parser(model_path: str, traceability_path: str) -> CModel:
     with open(model_path, "r") as input_file:
         input = json.load(input_file)
 
-    flows = [x for x in input["global"]["communication"].split("\n") if x][1:]
-    for f in flows:
-        sender = f.split("-->")[0]
-        receiver = f.split("|")[2]
+    if "communication" in input["global"] and input["global"]["communication"]:
+        flows = [x for x in input["global"]["communication"].split("\n") if x][1:]
+        for f in flows:
+            try:
+                sender = f.split("-->")[0]
+                receiver = f.split("|")[2]
 
-        nodes_raw.add(sender)
-        nodes_raw.add(receiver)
-        edges_raw.add((sender, receiver))
+                nodes_raw.add(sender)
+                nodes_raw.add(receiver)
+                edges_raw.add((sender, receiver))
+            except Exception as e:
+                print(e)
 
     services = input["ms"]
     for s in services:

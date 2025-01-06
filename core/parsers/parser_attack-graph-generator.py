@@ -42,8 +42,6 @@ def parser(model_path: str, traceability_path: str) -> CModel:
         
             edges.add(CEdge(sender, receiver, list(), list()))
 
-
-
     return CModel("Model_parsed_from_attack-graph-generator", CNodes(nodes), CEdges(edges))
 
 
@@ -51,6 +49,7 @@ if __name__ == "__main__":
     model = parser(sys.argv[1], None)
     print(model.nodes)
     print(model.edges)
+    
 
 
 
