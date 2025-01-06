@@ -32,14 +32,15 @@ def parser(model_path: str, traceability_path: str) -> CModel:
                 receiver = inter["interaction"]
                 edges_raw.add((sender, receiver))
     if "groups" in input["topology_template"]:
-        for node in input["topology_template"]["groups"]["edge"]["members"]:
-            for n in nodes_raw:
-                if node == n:
-                    nodes_raw[n].append("entrypoint")
+        if "edge" in input["topology_template"]["groups"]:
+            for node in input["topology_template"]["groups"]["edge"]["members"]:
+                for n in nodes_raw:
+                    if node == n:
+                        nodes_raw[n].append("entrypoint")
 
     for n in nodes_raw:
         nodes.add(CNode(n, nodes_raw[n], list(), list()))
-        
+
     for e in edges_raw:
         for node in nodes:
             if node.name == e[0]:
