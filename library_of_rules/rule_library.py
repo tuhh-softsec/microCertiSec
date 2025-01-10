@@ -71,14 +71,14 @@ def r06(model):
     """All connections between services should be authorized.
     """
 
-    return model.edges.sender_is("internal").receiver_is("internal").all_are("authorized")
+    return model.edges.sender_is("service").receiver_is("service").all_are("authorized")
 
 
 def r07(model):
     """All connections between services should be authenticated.
     """
 
-    return model.edges.sender_is("internal").receiver_is("internal").all_are("authenticated")
+    return model.edges.sender_is("service").receiver_is("service").all_are("authenticated")
 
 
 def r08(model):
